@@ -1,50 +1,58 @@
 import { neo4jgraphql } from "neo4j-graphql-js";
 
 export const typeDefs = `
-type User {
-  id: ID!
-  name: String
-  friends(first: Int = 10, offset: Int = 0): [User] @relation(name: "FRIENDS", direction: "BOTH")
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "WROTE", direction: "OUT")
-  avgStars: Float @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))")
+
+type GitHubUser {
+    id: ID!
+    type: String
+    repositories(first: Int = 10, offset: Int = 0): [Repository] @relation(name:"CREATED", direction:"OUT")
+
+    name: String
+    location: String
+    avatarUrl: String
+    full_name: String
+    followers: Int
 }
 
-type Business {
-  id: ID!
-  name: String
-  address: String
-  city: String
-  state: String
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "REVIEWS", direction: "IN")
-  categories(first: Int = 10, offset: Int =0): [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+type Tag {
+    name: ID!
+    tagged: [Repository] @relation(name:"TAGGED", direction:"IN")
 }
 
-type Review {
-  id: ID!
-  stars: Int
-  text: String
-  business: Business @relation(name: "REVIEWS", direction: "OUT")
-  user: User @relation(name: "WROTE", direction: "IN")
-}
-
-type Category {
-  name: ID!
-  businesses(first: Int = 10, offset: Int = 0): [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+type Repository {
+	id: ID!
+    title: String!
+    full_name: String
+    url: String
+    created: Int
+    homepage: String
+    favorites: Int
+    updated: Int
+    pushed: Int
+    size: Int
+    score: Float
+    watchers: Int
+    language: String
+    forks: Int
+    open_issues: Int
+    branch: String
+    description: String
+    owner: GitHubUser @relation(name:"CREATED", direction: "IN")
+    tags: [Tag] @relation(name:"TAGGED", direction:"OUT")
 }
 
 type Query {
-    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [User]
-    businesses(id: ID, name: String, first: Int = 10, offset: Int = 0): [Business]
-    reviews(id: ID, stars: Int, first: Int = 10, offset: Int = 0): [Review]
-    category(name: ID!): Category
+    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [GitHubUser] 
+    repository(id: ID, title: String, first: Int = 10, offset: Int = 0): [Repository]
+    tag(name: ID!): Tag
 }
+
 `;
 
 export const resolvers = {
   Query: {
     users: neo4jgraphql,
-    businesses: neo4jgraphql,
-    reviews: neo4jgraphql,
-    category: neo4jgraphql
+    repository: neo4jgraphql,
+    tag: neo4jgraphql
   }
 };

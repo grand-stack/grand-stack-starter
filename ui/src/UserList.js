@@ -2,27 +2,30 @@ import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import './UserList.css';
-
 const UserList = () => (
   <Query
     query={gql`
-      {
-        users(first: 10) {
-          name
-        }
-      }
+       {
+         users(first: 10) {
+           name
+           repositories(first: 3) {
+             title
+             favorites
+             forks
+           }
+         }
+       }
     `}
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error</p>;
-
       return (
           <div className="UserList">
           <h1>Users:</h1>
         <ul>
-          {data.users.map(({name}, i) => (
-          <li key={i}>{name}</li>
+          {data.users.map((u,i)=> (
+          <li key={i}>{u.name} <ul>{u.repositories.map((r,i) => (<li key={i}>{r.title} (fav: {r.favorites} forks: {r.forks})</li>))}</ul></li>
           ))}
         </ul>
         </div>
@@ -30,5 +33,4 @@ const UserList = () => (
     }}
   </Query>
 );
-
 export default UserList;
