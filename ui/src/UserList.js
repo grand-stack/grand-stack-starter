@@ -8,7 +8,8 @@ const UserList = () => (
     query={gql`
       {
         users(first: 10) {
-          name
+          name: screen_name
+          tweets: posted(first:3) { text, favorites, tags {name} }
         }
       }
     `}
@@ -21,8 +22,8 @@ const UserList = () => (
           <div className="UserList">
           <h1>Users:</h1>
         <ul>
-          {data.users.map(({name}, i) => (
-          <li key={i}>{name}</li>
+          {data.users.map((u,i)=> (
+          <li key={i}>{u.name} <ul>{u.tweets.map((t,i) => (<li key={i}>{t.text} ({t.favorites} {t.tags.map((t)=>t.name).join(", ")})</li>))}</ul></li>
           ))}
         </ul>
         </div>

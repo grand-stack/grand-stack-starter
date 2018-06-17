@@ -1,50 +1,51 @@
 import { neo4jgraphql } from "neo4j-graphql-js";
 
 export const typeDefs = `
-type User {
-  id: ID!
-  name: String
-  friends(first: Int = 10, offset: Int = 0): [User] @relation(name: "FRIENDS", direction: "BOTH")
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "WROTE", direction: "OUT")
-  avgStars: Float @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))")
+type Link {
+    url: ID!
 }
 
-type Business {
-  id: ID!
-  name: String
-  address: String
-  city: String
-  state: String
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "REVIEWS", direction: "IN")
-  categories(first: Int = 10, offset: Int =0): [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+type TwitterUser {
+    id: ID!
+    screen_name: String!
+    name: String
+    location: String
+    followers: Int
+    following: Int
+    statuses: Int
+    profile_image_url: String
+    posted(first: Int = 10, offset: Int = 0): [Tweet] @relation(name:"POSTED", direction:"OUT")
 }
 
-type Review {
-  id: ID!
-  stars: Int
-  text: String
-  business: Business @relation(name: "REVIEWS", direction: "OUT")
-  user: User @relation(name: "WROTE", direction: "IN")
+type Tweet {
+    id: ID!
+    text: String
+    created: Int
+    favorites: Int
+    postedBy: TwitterUser @relation(name:"POSTED", direction:"IN")
+    mentioned: [TwitterUser] @relation(name:"MENTIONED", direction:"OUT")
+    reply: Tweet @relation(name:"REPLIED_TO", direction:"OUT")
+    retweeted: Tweet @relation(name:"RETWEETED", direction:"OUT")
+    links: [Link] @relation(name:"LINKED", direction:"OUT")
+    tags: [Tag] @relation(name:"TAGGED", direction:"OUT")
 }
 
-type Category {
-  name: ID!
-  businesses(first: Int = 10, offset: Int = 0): [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+type Tag {
+    name: ID!
+    tagged: [Tweet] @relation(name:"TAGGED", direction:"IN")
 }
 
 type Query {
-    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [User]
-    businesses(id: ID, name: String, first: Int = 10, offset: Int = 0): [Business]
-    reviews(id: ID, stars: Int, first: Int = 10, offset: Int = 0): [Review]
-    category(name: ID!): Category
+    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [TwitterUser] 
+    tweets(id: ID, text: String, first: Int = 10, offset: Int = 0): [Tweet]
+    tag(name: ID!): Tag
 }
 `;
 
 export const resolvers = {
   Query: {
     users: neo4jgraphql,
-    businesses: neo4jgraphql,
-    reviews: neo4jgraphql,
-    category: neo4jgraphql
+    tweets: neo4jgraphql,
+    tag: neo4jgraphql
   }
 };
