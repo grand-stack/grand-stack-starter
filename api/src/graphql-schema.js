@@ -1,50 +1,87 @@
 import { neo4jgraphql } from "neo4j-graphql-js";
 
 export const typeDefs = `
-type User {
-  id: ID!
-  name: String
-  friends(first: Int = 10, offset: Int = 0): [User] @relation(name: "FRIENDS", direction: "BOTH")
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "WROTE", direction: "OUT")
-  avgStars: Float @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))")
+type MeetupUser {
+    id: ID!
+    name: String
+    updated: Int
+    groups(first: Int = 10, offset: Int = 0): [Group] @relation(name:"JOINED", direction:"OUT")
+    organizes: [Group] @relation(name:"CREATED", direction:"OUT")
+    events(first: Int = 10, offset: Int = 0): [Event]  @relation(name:"ATTENDED", direction:"OUT")
 }
 
-type Business {
-  id: ID!
-  name: String
-  address: String
-  city: String
-  state: String
-  reviews(first: Int = 10, offset: Int = 0): [Review] @relation(name: "REVIEWS", direction: "IN")
-  categories(first: Int = 10, offset: Int =0): [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+type Tag {
+    name: ID!
+    tagged(first: Int = 10, offset: Int = 0): [Group] @relation(name:"TAGGED", direction:"IN")
 }
 
-type Review {
-  id: ID!
-  stars: Int
-  text: String
-  business: Business @relation(name: "REVIEWS", direction: "OUT")
-  user: User @relation(name: "WROTE", direction: "IN")
+type Group {
+    id: ID!
+    title: String!
+    created: Int
+    country: String
+    city: String
+    latitude: Float
+    longitude: Float
+    link: String
+    text: String
+    memberCount: Int
+    score: Float
+    key: String
+    tags(first: Int = 10, offset: Int = 0): [Tag]  @relation(name:"TAGGED", direction:"OUT")
+    members(first: Int = 10, offset: Int = 0): [MeetupUser]  @relation(name:"JOINED", direction:"IN")
+    events(first: Int = 10, offset: Int = 0): [Event]  @relation(name:"CONTAINED", direction:"OUT")
+    owners: [MeetupUser]  @relation(name:"CREATED", direction:"IN")
 }
 
-type Category {
-  name: ID!
-  businesses(first: Int = 10, offset: Int = 0): [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+type Event {
+    id: ID!
+    title: String!
+    created: Int
+    past: Boolean
+    status: String
+    rsvp_limit: Int
+    yes_rsvp_count: Int
+    maybe_rsvp_count: Int
+    score: Float
+    headcount: Int
+    text: String
+    link: String
+    utc_offset: Int
+    time: Int
+    updated: Int
+    waitlist_count: Int
+    attendees(first: Int = 10, offset: Int = 0): [MeetupUser] @relation(name:"ATTENDED", direction:"IN")
+    owner: [MeetupUser] @relation(name:"CREATED", direction:"IN")
+    venue: Venue @relation(name:"CONTAINED", direction:"IN")
+    group: Group @relation(name:"HOSTED", direction:"IN")
+}
+
+type Venue {
+    id: ID!
+    name: String
+    address: String
+    city: String
+    country: String
+    country_name: String
+    latitude: Float
+    longitude: Float
+    events(first: Int = 10, offset: Int = 0): [Event]  @relation(name:"CONTAINED", direction:"OUT")
 }
 
 type Query {
-    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [User]
-    businesses(id: ID, name: String, first: Int = 10, offset: Int = 0): [Business]
-    reviews(id: ID, stars: Int, first: Int = 10, offset: Int = 0): [Review]
-    category(name: ID!): Category
+    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [MeetupUser] 
+    groups(id: ID, title: String, first: Int = 10, offset: Int = 0): [Group]
+    venues(id: ID, name: String, city:String, country: String, first: Int = 10, offset: Int = 0): [Venue]
+    tag(name: ID!): Tag
 }
 `;
 
 export const resolvers = {
   Query: {
     users: neo4jgraphql,
-    businesses: neo4jgraphql,
-    reviews: neo4jgraphql,
-    category: neo4jgraphql
+    groups: neo4jgraphql,
+    venues: neo4jgraphql,
+    tag: neo4jgraphql
   }
 };
