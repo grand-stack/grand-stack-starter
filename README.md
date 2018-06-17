@@ -1,6 +1,8 @@
-# GRANDstack Starter
+# GRANDstack Starter -  - StackOverflow Data
 
 This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (a React app) and the API app (GraphQL server).
+
+The schema, database and example query for this branch uses StackOverflow Data.
 
 ## Quickstart
 
