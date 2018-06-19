@@ -28,7 +28,22 @@ const server = new ApolloServer({
   //resolvers,
   context: { driver },
   // remove schema and uncomment typeDefs and resolvers above to use original (unaugmented) schema
-  schema: augmentedSchema
+  schema: augmentedSchema,
+  formatParams: params => {
+    console.log(params);
+    return params;
+  },
+  formatError: error => {
+    console.log(error);
+    return error;
+  },
+  formatResponse: response => {
+    console.log(response);
+    return response;
+  },
+  logFunction: information => {
+    console.log(information)
+  },
 });
 
 server.listen().then(({ url }) => {
