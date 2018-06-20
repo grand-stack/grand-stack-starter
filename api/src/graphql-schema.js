@@ -2,7 +2,7 @@ import { neo4jgraphql } from "neo4j-graphql-js";
 
 export const typeDefs = `
 type Match {
-  id: Int!
+  id: Int! @cypher(statement:"RETURN toString({this}.id) AS id")
   description: String
   round: String
   date: String @cypher(statement:"RETURN toString({this}.date) AS date")
@@ -15,6 +15,7 @@ type Match {
   worldCup: WorldCup @relation(name: "CONTAINS_MATCH", direction: "IN")
   winner: Country @cypher(statement: """WITH {this} AS this
                                         MATCH (team1)-[t1Played:PLAYED_IN]->(this)<-[t2Played:PLAYED_IN]-(team2)
+                                        WHERE id(team1) < id(team2)
                                         RETURN CASE
                                         WHEN t1Played.score > t2Played.score THEN team1
                                         WHEN t1Played.score < t2Played.score THEN team2
@@ -22,6 +23,14 @@ type Match {
                                         WHEN t1Played.score = t2Played.score AND t1Played.penalties < t2Played.penalties THEN team2
                                         ELSE null END AS winner
                                      """)
+  goals: [Goal] @cypher(statement: "WITH {this} AS this MATCH (this)<-[:IN_MATCH]-()-[:SCORED_GOAL]->(goal) RETURN goal")
+  appearances: [Appearance] @cypher(statement: "WITH {this} AS this MATCH (this)<-[:IN_MATCH]-(app:Appearance) RETURN app")
+}
+
+type Goal {
+  type: String
+  time: String
+  scorer: Player @cypher(statement: "WITH {this} AS this MATCH (this)<-[:SCORED_GOAL]-()<--(p:Player) RETURN p")
 }
 
 type WorldCup {
@@ -32,14 +41,14 @@ type WorldCup {
 }
 
 type Country {
-  id: ID!
+  id: ID! @cypher(statement:"RETURN toString({this}.id) AS id")
   code: String
   name: String
   hostedWorldCups: [WorldCup] @relation(name: "HOSTED_BY", direction: "IN")
 }
 
 type Player {
-  id: ID!
+  id: ID! @cypher(statement:"RETURN toString({this}.id) AS id")
   name: String
   dob: String @cypher(statement:"RETURN toString({this}.dob) AS dob")
   squads: [Squad] @relation(name: "IN_SQUAD", direction: "OUT")
@@ -65,6 +74,8 @@ type Appearance {
   ownGoals: Int @cypher(statement:"WITH {this} AS this RETURN size([(this)-[:SCORED_GOAL]->(goal) WHERE goal.type in ['owngoal'] | goal]) AS ownGoals")
   match: Match @relation(name: "IN_MATCH", direction: "OUT")
   opposition: Country @cypher(statement:"WITH {this} AS this MATCH (this)-[:IN_MATCH]->(m)<-[:PLAYED_IN]-(team) WHERE not (team)-[:NAMED_SQUAD]->()<-[:IN_SQUAD]-()--(this) RETURN team AS opposition")
+  player: Player @cypher(statement:"WITH {this} AS this MATCH (this)<-[:STARTED|:SUBSTITUTE]-(player) RETURN player")
+  type: String @cypher(statement:"WITH {this} AS this MATCH (this)<-[app:STARTED|:SUBSTITUTE]-(player) RETURN type(app)")
 }
 
 type Squad {
