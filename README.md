@@ -1,6 +1,8 @@
-# GRANDstack Starter
+# GRANDstack Starter - World Cup 2018 Data
 
 This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (a React app) and the API app (GraphQL server).
+
+![](worldcup_graphql_neo4j.png)
 
 ## Quickstart
 

@@ -1,5 +1,5 @@
 {
-  "name": "grand-stack-starter-api",
+  "name": "worldcup-grand-stack-api",
   "version": "0.0.1",
   "description": "API app for GRANDstack",
   "main": "src/index.js",
