@@ -7,9 +7,19 @@ const UserList = () => (
   <Query
     query={gql`
       {
-        users(first: 10) {
-          name
-        }
+        matches(first:10) {
+    id
+    description
+    home_team {
+      name
+    }
+    away_team {
+      name
+    }
+    h_score
+    a_score
+    date
+  }
       }
     `}
   >
@@ -19,10 +29,10 @@ const UserList = () => (
 
       return (
           <div className="UserList">
-          <h1>Users:</h1>
+          <h1>Matches:</h1>
         <ul>
-          {data.users.map(({name}, i) => (
-          <li key={i}>{name}</li>
+          {data.matches.map(({date, home_team, away_team, h_score, a_score}, i) => (
+          <li key={i}>On {date}: {home_team.name} {h_score}-{a_score} {away_team.name}</li>
           ))}
         </ul>
         </div>
