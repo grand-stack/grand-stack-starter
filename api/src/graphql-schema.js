@@ -1,10 +1,8 @@
-import { neo4jgraphql } from "neo4j-graphql-js";
-
 export const typeDefs = `
 type SOUser {
     id: ID!
-    questions(first: Int = 10, offset: Int = 0): [Question] @relation(name:"POSTED", direction:"OUT")
-    answers(first: Int = 10, offset: Int = 0): [Answer] @relation(name:"POSTED", direction:"OUT")
+    questions: [Question] @relation(name:"POSTED", direction:"OUT")
+    answers: [Answer] @relation(name:"POSTED", direction:"OUT")
     reputation: Int
     name: String
     location: String
@@ -13,7 +11,7 @@ type SOUser {
 
 type Tag {
     name: ID!
-    tagged(first: Int = 10, offset: Int = 0): [Question] @relation(name:"TAGGED", direction:"IN")
+    tagged: [Question] @relation(name:"TAGGED", direction:"IN")
 }
 
 type Question {
@@ -47,17 +45,4 @@ type Answer {
     question: Question @relation(name:"ANSWERED", direction:"OUT")
     author: SOUser @relation(name:"POSTED", direction:"IN")
 }
-type Query {
-    users(id: ID, name: String, first: Int = 10, offset: Int = 0): [SOUser] 
-    questions(id: ID, title: String, first: Int = 10, offset: Int = 0): [Question]
-    tag(name: ID!): Tag
-}
 `;
-
-export const resolvers = {
-  Query: {
-    users: neo4jgraphql,
-    questions: neo4jgraphql,
-    tag: neo4jgraphql
-  }
-};
