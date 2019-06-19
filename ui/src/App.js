@@ -24,6 +24,7 @@ import {
 } from "@material-ui/icons";
 
 import UserList from "./UserList";
+import QuestionList from "./QuestionList";
 import classNames from "classnames";
 
 const drawerWidth = 240;
@@ -187,12 +188,12 @@ class App extends Component {
 
                 <ListItem
                   button
-                  onClick={() => this.setSelectedView("Businesses")}
+                  onClick={() => this.setSelectedView("Questions")}
                 >
                   <ListItemIcon>
                     <EventNoteIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Businesses" />
+                  <ListItemText primary="Questions" />
                 </ListItem>
 
                 <ListItem button onClick={() => this.setSelectedView("Users")}>
@@ -210,7 +211,9 @@ class App extends Component {
             {/* FIXME: Use proper routing here instead  */}
             <Typography component="div" className={classes.chartContainer}>
               {this.state.selectedView === "Home" ? <UserList /> : null}
-              {this.state.selectedView === "Businesses" ? <div /> : null}
+              {this.state.selectedView === "Questions" ? (
+                <QuestionList />
+              ) : null}
               {this.state.selectedView === "Users" ? <UserList /> : null}
             </Typography>
           </main>

@@ -33,13 +33,13 @@ const styles = theme => ({
   }
 });
 
-class UserList extends React.Component {
+class QuestionList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       order: "asc",
-      orderBy: "name",
+      orderBy: "title",
       page: 0,
       rowsPerPage: 10,
       usernameFilter: ""
@@ -59,7 +59,7 @@ class UserList extends React.Component {
 
   getFilter = () => {
     return this.state.usernameFilter.length > 0
-      ? { name_contains: this.state.usernameFilter }
+      ? { title_contains: this.state.usernameFilter }
       : {};
   };
 
@@ -77,11 +77,11 @@ class UserList extends React.Component {
     return (
       <Paper className={classes.root}>
         <Typography variant="h2" gutterBottom>
-          User List
+          Question List
         </Typography>
         <TextField
           id="search"
-          label="User Name Contains"
+          label="Question Contains"
           className={classes.textField}
           value={this.state.usernameFilter}
           onChange={this.handleFilterChange("usernameFilter")}
@@ -98,20 +98,21 @@ class UserList extends React.Component {
             query usersPaginateQuery(
               $first: Int
               $offset: Int
-              $orderBy: [_UserOrdering]
-              $filter: _UserFilter
+              $orderBy: [_QuestionOrdering]
+              $filter: _QuestionFilter
             ) {
-              User(
+              Question(
                 first: $first
                 offset: $offset
                 orderBy: $orderBy
                 filter: $filter
               ) {
                 id
-                name
-                display_name
-                reputation
-                link
+                title
+                text
+                tagged {
+                  name
+                }
               }
             }
           `}
@@ -132,7 +133,7 @@ class UserList extends React.Component {
                   <TableRow>
                     <TableCell
                       key="name"
-                      sortDirection={orderBy === "name" ? order : false}
+                      sortDirection={orderBy === "title" ? order : false}
                     >
                       <Tooltip
                         title="Sort"
@@ -140,17 +141,17 @@ class UserList extends React.Component {
                         enterDelay={300}
                       >
                         <TableSortLabel
-                          active={orderBy === "name"}
+                          active={orderBy === "title"}
                           direction={order}
-                          onClick={() => this.handleSortRequest("name")}
+                          onClick={() => this.handleSortRequest("title")}
                         >
                           Name
                         </TableSortLabel>
                       </Tooltip>
                     </TableCell>
                     <TableCell
-                      key="reputation"
-                      sortDirection={orderBy === "reputation" ? order : false}
+                      key="avgStars"
+                      sortDirection={orderBy === "avgStars" ? order : false}
                       numeric
                     >
                       <Tooltip
@@ -159,11 +160,11 @@ class UserList extends React.Component {
                         enterDelay={300}
                       >
                         <TableSortLabel
-                          active={orderBy === "reputation"}
+                          active={orderBy === "avgStars"}
                           direction={order}
-                          onClick={() => this.handleSortRequest("reputation")}
+                          onClick={() => this.handleSortRequest("avgStars")}
                         >
-                          Reputation
+                          Location
                         </TableSortLabel>
                       </Tooltip>
                     </TableCell>
@@ -189,14 +190,16 @@ class UserList extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.User.map(n => {
+                  {data.Question.map(n => {
                     return (
                       <TableRow key={n.id}>
                         <TableCell component="th" scope="row">
-                          {n.name}
+                          {n.title}
                         </TableCell>
-                        <TableCell>{n.reputation}</TableCell>
-                        <TableCell>{n.link}</TableCell>
+                        <TableCell>
+                          {n.text ? n.text.substring(0, 100) + "..." : "-"}
+                        </TableCell>
+                        <TableCell>{n.url}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -210,4 +213,4 @@ class UserList extends React.Component {
   }
 }
 
-export default withStyles(styles)(UserList);
+export default withStyles(styles)(QuestionList);
