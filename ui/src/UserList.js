@@ -23,6 +23,10 @@ const styles = theme => ({
     overflowX: "auto",
     margin: "auto"
   },
+  img: {
+    maxWidth: 25,
+    maxHeight: 25
+  },
   table: {
     minWidth: 700
   },
@@ -59,7 +63,7 @@ class UserList extends React.Component {
 
   getFilter = () => {
     return this.state.usernameFilter.length > 0
-      ? { name_contains: this.state.usernameFilter }
+      ? { display_name_contains: this.state.usernameFilter }
       : {};
   };
 
@@ -111,7 +115,9 @@ class UserList extends React.Component {
                 name
                 display_name
                 reputation
+                acceptedCount
                 link
+                image
               }
             }
           `}
@@ -132,7 +138,7 @@ class UserList extends React.Component {
                   <TableRow>
                     <TableCell
                       key="name"
-                      sortDirection={orderBy === "name" ? order : false}
+                      sortDirection={orderBy === "display_name" ? order : false}
                     >
                       <Tooltip
                         title="Sort"
@@ -140,9 +146,9 @@ class UserList extends React.Component {
                         enterDelay={300}
                       >
                         <TableSortLabel
-                          active={orderBy === "name"}
+                          active={orderBy === "display_name"}
                           direction={order}
-                          onClick={() => this.handleSortRequest("name")}
+                          onClick={() => this.handleSortRequest("display_name")}
                         >
                           Name
                         </TableSortLabel>
@@ -167,9 +173,12 @@ class UserList extends React.Component {
                         </TableSortLabel>
                       </Tooltip>
                     </TableCell>
+
                     <TableCell
-                      key="numReviews"
-                      sortDirection={orderBy === "numReviews" ? order : false}
+                      key="acceptedCount"
+                      sortDirection={
+                        orderBy === "acceptedCount" ? order : false
+                      }
                       numeric
                     >
                       <Tooltip
@@ -178,9 +187,31 @@ class UserList extends React.Component {
                         enterDelay={300}
                       >
                         <TableSortLabel
-                          active={orderBy === "numReviews"}
+                          active={orderBy === "acceptedCount"}
                           direction={order}
-                          onClick={() => this.handleSortRequest("numReviews")}
+                          onClick={() =>
+                            this.handleSortRequest("acceptedCount")
+                          }
+                        >
+                          Accepted Count
+                        </TableSortLabel>
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell
+                      key="link"
+                      sortDirection={orderBy === "link" ? order : false}
+                      numeric
+                    >
+                      <Tooltip
+                        title="Sort"
+                        placement="bottom-start"
+                        enterDelay={300}
+                      >
+                        <TableSortLabel
+                          active={orderBy === "link"}
+                          direction={order}
+                          onClick={() => this.handleSortRequest("link")}
                         >
                           URL
                         </TableSortLabel>
@@ -193,10 +224,20 @@ class UserList extends React.Component {
                     return (
                       <TableRow key={n.id}>
                         <TableCell component="th" scope="row">
-                          {n.name}
+                          <img src={n.image} /> <br />
+                          <b>{n.display_name}</b>
                         </TableCell>
                         <TableCell>{n.reputation}</TableCell>
-                        <TableCell>{n.link}</TableCell>
+                        <TableCell>{n.acceptedCount}</TableCell>
+                        <TableCell>
+                          <a
+                            href={n.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {n.link}
+                          </a>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

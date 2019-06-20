@@ -15,11 +15,11 @@ type Answer {
 }
 
 type User {
-   display_name: String!
+   display_name: String
    id: Int!
    image: String
    link: String
-   name: String!
+   name: String
    reputation: Int
    acceptedCount: Int @cypher(statement: "RETURN size((this)-[:PROVIDED]->(:Answer {accepted:true})) as accepted")
    recommendedQuestions: [Question] @cypher(statement: "MATCH (this)-[:PROVIDED]->(:Answer)-[:ANSWERS]->(:Question)-[:TAGGED]->(tag:Tag) WITH tag, count(*) as freq order by freq desc limit 4 MATCH (tag)<-[:TAGGED]-(q:Question {answered:false})  RETURN q ORDER BY q.favorites DESC LIMIT 5 ")
