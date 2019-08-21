@@ -1,0 +1,17 @@
+{
+    "name": "grand-stack-starter",
+    "env": {
+        "NEO4J_URI": {
+            "description": "The bolt endpoint for your neo4j database. For example: bolt://grandstack.io:7687",
+            "required": true
+        },
+        "NEO4J_USER": {
+            "description": "The database user that the API application will use to connect to Neo4j",
+            "required": true
+        },
+        "NEO4J_PASSWORD": {
+            "description": "The password for the provided Neo4j database user",
+            "required": true
+        }
+    }
+}
