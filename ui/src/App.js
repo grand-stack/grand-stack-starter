@@ -45,7 +45,7 @@ class App extends Component {
           <h2>Common Interests</h2>
         </div>
         <div>
-          <BipartiteGraph data={final_data} size={[800,500]} orientation={"horizontal"} />
+          <BipartiteGraph data={final_data} size={[800,500]} orientation={"vertical"} />
         </div>
       </div>
     )}}
