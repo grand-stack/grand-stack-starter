@@ -1,7 +1,7 @@
 type Person {
     name: String!
     interests: [Topic] @relation(name: "INTERESTED_IN", direction: "OUT")
-    conversationPartner: [PersonRelationship] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN p.name AS relatedPerson, collect(t.name) AS commonTopics, count(t) AS commonTopicCount")
+    conversationPartner: [Person] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN DISTINCT p")
 }
 
 type Topic {
@@ -14,8 +14,7 @@ type Query {
     peopleBySubstring(substring:String!): [Person] @cypher(statement: "MATCH (p:Person) where p.name CONTAINS $substring RETURN p")
 }
 
-type PersonRelationship {
-    relatedPerson: String
-    commonTopics: String
-    commonTopicCount: Int
+type Interested_In @relation(name: "INTERESTED_IN"){
+    from: Person
+    to: Topic
 }
