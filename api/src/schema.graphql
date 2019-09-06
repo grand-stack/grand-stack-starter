@@ -12,7 +12,7 @@ type Topic {
 
 type Query {
     peopleBySubstring(substring:String!): [Person] @cypher(statement: "MATCH (p:Person) where p.name CONTAINS $substring RETURN p")
-    allNodes(first:Int = 500): [genericNode] @cypher(statement: "MATCH (n) LIMIT $first RETURN n")
+    searchNodes: [Result]
 }
 
-union genericNode = Person | Topic
+union Result = Person | Topic
