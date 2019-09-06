@@ -11,7 +11,7 @@ type Topic {
 }
 
 type Query {
-    allNodes: [Node] @cypher( statement(first: Int = 500): "MATCH (n) LIMIT $first RETURN n")
+    peopleBySubstring(substring:String): [Person] @cypher(statement: "MATCH (p:Person) where p.name CONTAINS $substring RETURN p")
 }
 
 union Node = Person | Topic
