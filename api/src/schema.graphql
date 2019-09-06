@@ -1,13 +1,17 @@
 type Person {
     name: String!
     interests: [Topic] @relation(name: "INTERESTED_IN", direction: "OUT")
-    conversationPartner: [Person] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(:Topic)<-[:INTERESTED_IN]-(p:Person) return p")
+    conversationPartner: [Person] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN DISTINCT p")
 }
 
 type Topic {
     name: String!
     interestingTo: [Person] @relation(name: "INTERESTED_IN", direction: "IN")
-    inCommonWith: [Topic] @cypher(statement: "MATCH (this)<-[:INTERESTED_IN]-(:Person)-[:INTERESTED_IN]->(t:Topic) return t")
+    inCommonWith: [Topic] @cypher(statement: "MATCH (this)<-[:INTERESTED_IN]-(:Person)-[:INTERESTED_IN]->(t:Topic) RETURN DISTINCT t")
 }
 
+type Query {
+    allNodes: [Node] @cypher( statement(first: Int = 500): "MATCH (n) LIMIT $first RETURN n")
+}
 
+union Node = Person | Topic
