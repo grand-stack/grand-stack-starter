@@ -1,7 +1,7 @@
 type Person {
     name: String!
     interests: [Topic] @relation(name: "INTERESTED_IN", direction: "OUT")
-    conversationPartner: [PersonRelationship] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN p, collect(t.name) AS commonTopics, count(t) AS commonTopicCount")
+    conversationPartner: [PersonRelationship] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN p.name AS relatedPerson, collect(t.name) AS commonTopics, count(t) AS commonTopicCount")
 }
 
 type Topic {
@@ -15,7 +15,7 @@ type Query {
 }
 
 type PersonRelationship {
-    relatedPerson: [Person]
+    relatedPerson: String
     commonTopics: String
     commonTopicCount: Int
 }
