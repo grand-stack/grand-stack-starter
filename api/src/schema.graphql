@@ -1,6 +1,6 @@
 type Person {
     name: String!
-    interests: [Topic] @relation(name: "INTERESTED_IN", direction: "OUT")
+    interests: [Interested_In]
     conversationPartner: [Person] @cypher(statement: "MATCH (this)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(p:Person) RETURN DISTINCT p")
 }
 
