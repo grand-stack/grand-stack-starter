@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import './App.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import BipartiteGraph from './BipartiteGraph'
+import BipartiteGraph from './BipartiteGraph';
+import { group, roundup } from 'd3-array';
 
 class App extends Component {
   render() {
@@ -10,33 +11,56 @@ class App extends Component {
     <Query
     query={gql`
       {
-          Person {
-            name
-            interests
-              { 
-                name
-              }
-          }
-        }  
+Person
+  {
+    name
+    interests{
+      Topic{
+        name
+        interestingTo{
+          name
+        }
+        }
+      }
+    }
+  }  
     `}
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error</p>;
 
-      var people = data.Person.map(obj=> ({'name':obj.name, 'nodeLabel':'Person'}))
-      var topics = data.Person.map(obj=>obj.interests.map(obj2 => obj2.name)).flat()
-      var unique_topics = [...new Set(topics)].map(topic => ({'name':topic, 'nodeLabel':'Topic'}))
-      var node_data = people.concat(unique_topics)
+      function unpackPerson(person)
+      {
+        var person_relationships = []
+        var name1 = person.name;
+          for(var i in person.interests){
+              var topic = person.interests[i].Topic;
+                  var topic_name = topic.name;
+              for(var it in topic.interestingTo){
+                  var name2 = topic.interestingTo[it].name;
+                        person_relationships.push(
+                          {person1: name1, topic: topic_name, person2: name2})
+                      }
+              }
+         return person_relationships
       
-      var links_data = []
-      for (var person in data.Person)
-        {var person_data = data.Person[person];
-           for (var interest in person_data.interests){
-             links_data.push({'source':person_data.name, 'target':person_data.interests[interest].name})
-           }
-           }
-      var final_data = {nodes:node_data, links: links_data}
+      }
+
+      var people_relationships = data.Person.map(unpackPerson).flat()
+
+      var group_name1 = group(people_relationships, d => d.name1)
+      var people = group_name1.keys().map(obj=> ({'name':obj.name, 'nodeLabel':'Person'}))     
+
+      var group_topics = group(people_relationships, d => d.topic)
+      var topics = group_topics.keys().map(obj=> ({'name':obj.name, 'nodeLabel':'Topic'}))     
+ 
+      var node_data = people.concat(topics)
+      
+      var group_person_topic = group(people_relationships, d => d.name1, d => d.topic)
+      console.log(group_person_topic)
+
+      var final_data = {nodes:node_data, links: []]}
 
       return (
     
