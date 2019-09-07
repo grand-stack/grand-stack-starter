@@ -26,7 +26,7 @@ class ForceGraph extends Component {
 
         const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.name))
-        .force("charge", forceManyBody().strength(-75))
+        .force("charge", forceManyBody().strength(-150))
         .force("collide", forceCollide(27).iterations(16) )
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
   
