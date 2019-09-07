@@ -3,7 +3,7 @@ import './App.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import BipartiteGraph from './BipartiteGraph';
-import { group, roundup } from 'd3-array';
+import { group, rollups } from 'd3-array';
 
 class App extends Component {
   render() {
