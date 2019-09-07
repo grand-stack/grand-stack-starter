@@ -20,11 +20,13 @@ class ForceGraph extends Component {
 
     createForceGraph() {
         const node = this.node
-        const displaySize = this.props.size
+        const links = props.data.links.map(d => Object.create(d));
+        const nodes = props.data.nodes.map(d => Object.create(d));
+        const displaySize = this.props.size;
         const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.id))
         .force("charge", forceManyBody())
-        .force("center", forceCenter(width / 2, height / 2));
+        .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
   
     const svg = node;
   
@@ -32,7 +34,7 @@ class ForceGraph extends Component {
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
       .selectAll("line")
-      .data(data.links)
+      .data(links)
       .join("line")
         .attr("stroke-width", d => Math.sqrt(d.topicCount));
   
@@ -40,7 +42,7 @@ class ForceGraph extends Component {
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
       .selectAll("circle")
-      .data(data.nodes)
+      .data(nodes)
       .join("circle")
         .attr("r", 5)
         .attr("fill", "lightblue")
@@ -61,7 +63,6 @@ class ForceGraph extends Component {
           .attr("cy", d => d.y);
     });
   
-    invalidation.then(() => simulation.stop());
   
   }
 
