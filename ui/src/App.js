@@ -10,21 +10,20 @@ class App extends Component {
     return (
     <Query
     query={gql`
-      {
-Person
-  {
-    name
-    interests{
-      Topic{
-        name
-        interestingTo{
+    {
+      Person
+        {
           name
-        }
-        }
-      }
+          interests{
+            
+              name
+              interestingTo{
+                name
+              }
+              }
+            }
     }
-  }  
-    `}
+      `}
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
