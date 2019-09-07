@@ -44,7 +44,7 @@ class App extends Component {
                       }
                     }
                     else {
-                      person-people_relationships.push(
+                      people_relationships.push(
                         {person1: name1, topic: topic_name}
                       )
                     }
