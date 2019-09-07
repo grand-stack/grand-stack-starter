@@ -97,11 +97,16 @@ class App extends Component {
         <div className='App-header'>
           <h2>Common Interests</h2>
         </div>
+          <BipartiteGraph data={final_data} size={[800,500]} orientation={"vertical"} />
         <div>
         </div>
         <div>
           <ForceGraph data={t2t_data} size={[800,500]} />
         </div>
+        <div>
+          <ForceGraph data={p2p_data} size={[800,500]} />
+        </div>
+
       </div>
     )}}
     </Query>    
