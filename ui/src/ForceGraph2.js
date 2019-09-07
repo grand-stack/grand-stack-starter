@@ -46,7 +46,7 @@ class ForceGraph extends Component {
       .join("circle")
         .attr("r", 5)
         .attr("fill", "lightblue")
-        .call(drag(simulation));
+        .call(dragging(simulation));
   
     circle.append("title")
         .text(d => d.name);
@@ -63,7 +63,7 @@ class ForceGraph extends Component {
           .attr("cy", d => d.y);
     });
 
-    drag = simulation => {
+    dragging = simulation => {
   
         function dragstarted(d) {
           if (!event.active) simulation.alphaTarget(0.3).restart();
