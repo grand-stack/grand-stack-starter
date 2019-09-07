@@ -67,10 +67,12 @@ class App extends Component {
 
     var person_to_person = arrayJoin(people_relationships, topic_relationships, "topic", "topic", "person", "person2");
 
-    //var topic_to_topic = arrayJoin(topic_relationships, people_relationships, "person", "person", "topic", "topic2");
+    var topic_to_topic = arrayJoin(topic_relationships, people_relationships, "person", "person", "topic", "topic2");
 
-    var pg = rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2)
-    
+    var pg = rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2);
+
+    var tg = rollups(topic_to_topic, v => v.map(w => w.topic), d => d.person, d => d.person2);
+
     function assembleProjectionLinks(groupedArray){
         var linkArray = []
         var p1 = groupedArray[0]
@@ -85,7 +87,9 @@ class App extends Component {
         return linkArray
     }
     var p2p_links = pg.map(assembleProjectionLinks).flat()
-    var p2p_data = {'nodes':node_data, 'links': p2p_links}
+    var p2p_data = {'nodes':people, 'links': p2p_links}
+    var t2t_links = tg.map(assembleProjectionLinks)
+    var t2t_data = {'nodes':topics, 'links': t2t_links}
 
       return (
     
