@@ -51,12 +51,12 @@ class App extends Component {
       var final_data = {nodes:node_data, links: link_data}
 
       function arrayJoin(lookupTable, mainTable, lookupKey, mainKey, lookupColumn, newColumnName) {
-        output = []
-        lg = d3.group(lookupTable, d => d[lookupKey]);
-        for(row in mainTable){
-            matchedRows = lg.get(mainTable[row][mainKey])
-            for (matchedRow in matchedRows){
-                newRow = Object.assign({}, mainTable[row])
+        var output = []
+        var lg = group(lookupTable, d => d[lookupKey]);
+        for(var row in mainTable){
+            var matchedRows = lg.get(mainTable[row][mainKey])
+            for (var matchedRow in matchedRows){
+                var newRow = Object.assign({}, mainTable[row])
                 newRow[newColumnName] = matchedRows[matchedRow][lookupColumn]
                 output.push(newRow)
             }
@@ -68,14 +68,14 @@ class App extends Component {
 
     //var topic_to_topic = arrayJoin(topic_relationships, people_relationships, "person", "person", "topic", "topic2");
 
-    var pg = d3.rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2)
+    var pg = rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2)
     
     function assembleProjection(groupedArray){
         var linkArray = []
         var p1 = groupedArray[0]
         for (var i in groupedArray[1]){
-            p2 = groupedArray[1][i][0]
-            topics = groupedArray[1][i][1]
+            var p2 = groupedArray[1][i][0]
+            var topics = groupedArray[1][i][1]
             if (p1 < p2){
                 linkArray.push({from:p1, to:p2, topics:topics.join(", "), topicCount:topics.length})
             }
