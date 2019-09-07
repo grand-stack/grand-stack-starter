@@ -10,7 +10,7 @@ class App extends Component {
     return (
     <Query
     query={gql`
-    Person
+    {Person
   {
     name
     interests{
