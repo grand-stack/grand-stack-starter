@@ -56,10 +56,10 @@ class App extends Component {
       var people_relationships = data.Person.map(unpackPerson).flat()
 
       var group_name1 = group(people_relationships, d => d.name1)
-      var people = group_name1.keys().map(obj=> ({'name':obj.name, 'nodeLabel':'Person'}))     
+      var people = Array.from(group_name1.keys()).map(obj=> ({'name':obj.name, 'nodeLabel':'Person'}))     
 
       var group_topics = group(people_relationships, d => d.topic)
-      var topics = group_topics.keys().map(obj=> ({'name':obj.name, 'nodeLabel':'Topic'}))     
+      var topics = Array.from(group_topics.keys()).map(obj=> ({'name':obj.name, 'nodeLabel':'Topic'}))     
  
       var node_data = people.concat(topics)
       
