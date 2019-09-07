@@ -47,14 +47,14 @@ class ForceGraph extends Component {
       .join("circle")
         .attr("r", 25)
         .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
-        .call(dragging(simulation));
+        .call(dragging(simulation))
+        .append("text")
+        .text(d => d.name)
+        .attr("text-anchor", "middle");
   
     circle.append("title")
         .text(d => d.name);
 
-    circle.append("text")
-        .text(d => d.name)
-        .attr("text-anchor", "middle")
 
     simulation.on("tick", () => {
       link
