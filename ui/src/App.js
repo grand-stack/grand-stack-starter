@@ -10,18 +10,13 @@ class App extends Component {
     return (
     <Query
     query={gql`
-    {
-      Person
-        {
-          name
-          interests{
-            
-              name
-              interestingTo{
-                name
-              }
-              }
-            }
+    Person
+  {
+    name
+    interests{
+        name
+        }
+      }
     }
       `}
   >
@@ -32,41 +27,28 @@ class App extends Component {
       function unpackPerson(person)
       {
         var person_relationships = []
-        var name1 = person.name;
-          for(var i in person.interests){
-              var topic = person.interests[i];
-                  var topic_name = topic.name;
-                  if(topic.interestingTo){
-                    for(var it in topic.interestingTo){
-                      var name2 = topic.interestingTo[it].name;
-                          person_relationships.push(
-                            {person1: name1, topic: topic_name, person2: name2})
-                      }
-                    }
-                    else {
-                      people_relationships.push(
-                        {person1: name1, topic: topic_name}
-                      )
-                    }
-              }
+        var person_name = person.name;
+            for(var i in person.interests){
+                var topic_name = person.interests[i].name;
+                person_relationships.push(
+                    {person: person_name, topic: topic_name})
+            }
          return person_relationships
-      
       }
 
-      var people_relationships = data.Person.map(unpackPerson).flat()
+      var people_relationships = d.data.Person.map(unpackPerson).flat()
+      var topic_relationships = people_relationships
 
-      var group_name1 = group(people_relationships, d => d.person1)
-      var people = Array.from(group_name1.keys()).map(d=> ({'name':d, 'nodeLabel':'Person'}))     
+      var group_person = d3.group(people_relationships, d => d.person)
+      var people = Array.from(group_person.keys()).map(d=> ({'name':d, 'nodeLabel':'Person'}))     
 
-      var group_topics = group(people_relationships, d => d.topic)
+      var group_topics = d3.group(people_relationships, d => d.topic)
       var topics = Array.from(group_topics.keys()).map(d=> ({'name':d, 'nodeLabel':'Topic'}))     
  
       var node_data = people.concat(topics)
       
-      var group_person_topic = group(people_relationships, d => d.name1, d => d.topic)
-      console.log(group_person_topic)
-
-      var final_data = {nodes:node_data, links: []}
+      var link_data = people_relationships.map(d => ({from:d.person, to:d.topic}))
+      var final_data = {nodes:node_data, links: link_data}
 
       return (
     
