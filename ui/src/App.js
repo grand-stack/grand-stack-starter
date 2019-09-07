@@ -55,7 +55,7 @@ class App extends Component {
 
       var people_relationships = data.Person.map(unpackPerson).flat()
 
-      var group_name1 = group(people_relationships, d => d.name1)
+      var group_name1 = group(people_relationships, d => d.person1)
       var people = Array.from(group_name1.keys()).map(d=> ({'name':d, 'nodeLabel':'Person'}))     
 
       var group_topics = group(people_relationships, d => d.topic)
