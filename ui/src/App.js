@@ -47,7 +47,7 @@ class App extends Component {
  
       var node_data = people.concat(topics)
       
-      var link_data = people_relationships.map(d => ({from:d.person, to:d.topic}))
+      var link_data = people_relationships.map(d => ({from:{name:d.person}, to:{name:d.topic}}))
       var final_data = {nodes:node_data, links: link_data}
 
       return (
