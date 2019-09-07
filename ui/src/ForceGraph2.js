@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import { forceSimulation, forceCollide, forceLink, forceCenter, forceManyBody } from 'd3-force'
-import { select, event } from 'd3-selection'
+import { select, event, create } from 'd3-selection'
 import { drag } from 'd3-drag'
 
 class ForceGraph extends Component {
@@ -19,11 +19,10 @@ class ForceGraph extends Component {
     }
 
     createForceGraph() {
+        const node = this.node
         const links = this.props.data.links.map(d => Object.create(d));
         const nodes = this.props.data.nodes.map(d => Object.create(d));
         const displaySize = this.props.size;
-        const svg = d3.create("svg")
-            .attr("viewBox", [0, 0, displaySize[0], displaySize[1]]);
 
         const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.name))
@@ -31,7 +30,7 @@ class ForceGraph extends Component {
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
   
   
-    const link = svg.append("g")
+    const link = select(node).append("g")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
       .selectAll("line")
@@ -39,7 +38,7 @@ class ForceGraph extends Component {
       .join("line")
         .attr("stroke-width", d => Math.sqrt(d.topicCount));
   
-    const circle = svg.append("g")
+    const circle = select(node).append("g")
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
       .selectAll("circle")
