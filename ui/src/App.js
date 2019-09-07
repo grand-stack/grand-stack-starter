@@ -78,9 +78,9 @@ class App extends Component {
         var p1 = groupedArray[0]
         for (var i in groupedArray[1]){
             var p2 = groupedArray[1][i][0]
-            var topics = groupedArray[1][i][1]
+            var commonalities = groupedArray[1][i][1]
             if (p1 < p2){
-                linkArray.push({'source':p1, 'target':p2, 'topics':topics.join(", "), 'topicCount':topics.length})
+                linkArray.push({'source':p1, 'target':p2, 'commonalities':commonalities.join(", "), 'commonalityCount':commonalities.length})
             }
         }
 

@@ -36,7 +36,7 @@ class ForceGraph extends Component {
       .selectAll("line")
       .data(links)
       .join("line")
-        .attr("stroke-width", d => Math.sqrt(d.topicCount));
+        .attr("stroke-width", d => d.commonalityCount);
   
     const circle = select(node).append("g")
         .attr("stroke", "#fff")
@@ -63,7 +63,7 @@ class ForceGraph extends Component {
           .attr("cy", d => d.y);
     });
 
-    dragging = simulation => {
+    function dragging(simulation) {
   
         function dragstarted(d) {
           if (!event.active) simulation.alphaTarget(0.3).restart();
