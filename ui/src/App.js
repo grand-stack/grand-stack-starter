@@ -84,8 +84,8 @@ class App extends Component {
 
         return linkArray
     }
-    var p2p_links = pg.map(assembleProjection).flat()
-    var ptp_data = {'nodes':node_data, 'links': p2p_links}
+    var p2p_links = pg.map(assembleProjectionLinks).flat()
+    var p2p_data = {'nodes':node_data, 'links': p2p_links}
     console.log(ptp_data)
 
       return (
