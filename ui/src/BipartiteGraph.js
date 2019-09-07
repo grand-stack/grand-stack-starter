@@ -23,7 +23,7 @@ class BipartiteGraph extends Component {
         const displaySize = this.props.size
         var simulation = forceSimulation()
         .force("link", forceLink().id(function(d) { return d.name }))
-        .force("collide", forceCollide( function(d){return 15 }).iterations(16) )
+        .force("collide", forceCollide(15).iterations(16) )
         .force("center", forceCenter(this.props.size[0]/2, this.props.size[1]/2))
         .force("y", forceY(0))
         .force("x", forceX(0))
