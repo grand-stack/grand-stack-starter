@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
-import { forceSimulation, forceCollide, forceLink, forceCenter, forceManyBody } from 'd3-force'
-import { select, event, create } from 'd3-selection'
+import { forceSimulation, forceLink, forceCenter, forceManyBody } from 'd3-force'
+import { select, event } from 'd3-selection'
 import { drag } from 'd3-drag'
 
 class ForceGraph extends Component {
@@ -26,7 +26,7 @@ class ForceGraph extends Component {
 
         const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.name))
-        .force("charge", forceManyBody())
+        .force("charge", forceManyBody()).strength(-50)
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
   
   
@@ -44,13 +44,17 @@ class ForceGraph extends Component {
       .selectAll("circle")
       .data(nodes)
       .join("circle")
-        .attr("r", 5)
-        .attr("fill", "lightblue")
+        .attr("r", 25)
+        .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
         .call(dragging(simulation));
   
     circle.append("title")
         .text(d => d.name);
-  
+
+    circle.append("text")
+        .text(d => d.name.replace("/ /g", "<br/>"))
+        .attr("text-anchor", function(d){return d.nodeLabel ==="Person"?"end":"start"})
+
     simulation.on("tick", () => {
       link
           .attr("x1", d => d.source.x)
