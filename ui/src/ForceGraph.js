@@ -19,12 +19,12 @@ class ForceGraph extends Component {
 
     createForceGraph() {
         const node = this.node
+        const displaySize = this.props.size
         var simulation = forceSimulation()
         .force("link", forceLink().id(function(d) { return d.name }))
         .force("collide", forceCollide( function(d){return 15 }).iterations(16) )
-        .force("center", forceCenter(this.props.size[0]/2, this.props.size[1]/2))
-        .force("y", forceY(0))
-        .force("x", forceX(0))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(displaySize[0] / 2, displaySize[1] / 2));
 
     select(node)
         .selectAll("line")
@@ -92,6 +92,31 @@ class ForceGraph extends Component {
     simulation.force("link")
         .links(this.props.data.links);    
     }
+
+    drag = simulation => {
+  
+        function dragstarted(d) {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        }
+        
+        function dragged(d) {
+          d.fx = d3.event.x;
+          d.fy = d3.event.y;
+        }
+        
+        function dragended(d) {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        }
+        
+        return d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+      }
 
 render(){
     return <svg ref={node => this.node = node}

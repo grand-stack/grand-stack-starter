@@ -86,10 +86,10 @@ class App extends Component {
 
         return linkArray
     }
-    var p2p_links = pg.map(assembleProjectionLinks).flat()
-    var p2p_data = {'nodes':people, 'links': p2p_links}
-    var t2t_links = tg.map(assembleProjectionLinks)
-    var t2t_data = {'nodes':topics, 'links': t2t_links}
+    var p2p_links = pg.map(assembleProjectionLinks).flat();
+    var p2p_data = {'nodes':people, 'links': p2p_links};
+    var t2t_links = tg.map(assembleProjectionLinks).flat();
+    var t2t_data = {'nodes':topics, 'links': t2t_links};
 
       return (
     
