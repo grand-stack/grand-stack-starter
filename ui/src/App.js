@@ -3,6 +3,7 @@ import './App.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import BipartiteGraph from './BipartiteGraph';
+import ForceGraph from './ForceGraph';
 import { group, rollups } from 'd3-array';
 
 class App extends Component {
@@ -47,7 +48,7 @@ class App extends Component {
  
       var node_data = people.concat(topics)
       
-      var link_data = people_relationships.map(d => ({'source':{name:d.person}, 'target':{name:d.topic}}))
+      var link_data = people_relationships.map(d => ({'source':d.person, 'target':d.topic}))
       var final_data = {nodes:node_data, links: link_data}
 
       function arrayJoin(lookupTable, mainTable, lookupKey, mainKey, lookupColumn, newColumnName) {
@@ -70,22 +71,22 @@ class App extends Component {
 
     var pg = rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2)
     
-    function assembleProjection(groupedArray){
+    function assembleProjectionLinks(groupedArray){
         var linkArray = []
         var p1 = groupedArray[0]
         for (var i in groupedArray[1]){
             var p2 = groupedArray[1][i][0]
             var topics = groupedArray[1][i][1]
             if (p1 < p2){
-                linkArray.push({from:p1, to:p2, topics:topics.join(", "), topicCount:topics.length})
+                linkArray.push({'source':p1, 'target':p2, 'topics':topics.join(", "), 'topicCount':topics.length})
             }
         }
 
-        return linkArray //people2.map(p2 => ({person1: p1, person2:p2[0]}))
+        return linkArray
     }
-    var pgm = pg.map(assembleProjection)
-        
-    console.log(pgm)
+    var p2p_links = pg.map(assembleProjection).flat()
+    var ptp_data = {'nodes':node_data, 'links': p2p_links}
+    console.log(ptp_data)
 
       return (
     
@@ -95,6 +96,9 @@ class App extends Component {
         </div>
         <div>
           <BipartiteGraph data={final_data} size={[800,500]} orientation={"vertical"} />
+        </div>
+        <div>
+          <ForceGraph data={p2p_data} size={[800,500]} />
         </div>
       </div>
     )}}
