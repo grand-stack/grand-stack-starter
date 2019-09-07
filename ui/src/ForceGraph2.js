@@ -36,7 +36,7 @@ class ForceGraph extends Component {
       .join("line")
         .attr("stroke-width", d => Math.sqrt(d.topicCount));
   
-    const node = svg.append("g")
+    const circle = svg.append("g")
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
       .selectAll("circle")
@@ -46,7 +46,7 @@ class ForceGraph extends Component {
         .attr("fill", "lightblue")
         .call(drag(simulation));
   
-    node.append("title")
+    circle.append("title")
         .text(d => d.id);
   
     simulation.on("tick", () => {
@@ -56,14 +56,13 @@ class ForceGraph extends Component {
           .attr("x2", d => d.target.x)
           .attr("y2", d => d.target.y);
   
-      node
+      circle
           .attr("cx", d => d.x)
           .attr("cy", d => d.y);
     });
   
     invalidation.then(() => simulation.stop());
   
-    return svg.node();
   }
 
 render(){
