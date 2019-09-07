@@ -60,7 +60,7 @@ Person
       var group_person_topic = group(people_relationships, d => d.name1, d => d.topic)
       console.log(group_person_topic)
 
-      var final_data = {nodes:node_data, links: []]}
+      var final_data = {nodes:node_data, links: []}
 
       return (
     
