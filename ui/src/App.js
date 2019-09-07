@@ -34,13 +34,20 @@ class App extends Component {
         var person_relationships = []
         var name1 = person.name;
           for(var i in person.interests){
-              var topic = person.interests[i].Topic;
+              var topic = person.interests[i];
                   var topic_name = topic.name;
-              for(var it in topic.interestingTo){
-                  var name2 = topic.interestingTo[it].name;
-                        person_relationships.push(
-                          {person1: name1, topic: topic_name, person2: name2})
+                  if(topic.interestingTo){
+                    for(var it in topic.interestingTo){
+                      var name2 = topic.interestingTo[it].name;
+                          person_relationships.push(
+                            {person1: name1, topic: topic_name, person2: name2})
                       }
+                    }
+                    else {
+                      person-people_relationships.push(
+                        {person1: name1, topic: topic_name}
+                      )
+                    }
               }
          return person_relationships
       
