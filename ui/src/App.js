@@ -47,8 +47,45 @@ class App extends Component {
  
       var node_data = people.concat(topics)
       
-      var link_data = people_relationships.map(d => ({from:{name:d.person}, to:{name:d.topic}}))
+      var link_data = people_relationships.map(d => ({'source':{name:d.person}, 'target':{name:d.topic}}))
       var final_data = {nodes:node_data, links: link_data}
+
+      function arrayJoin(lookupTable, mainTable, lookupKey, mainKey, lookupColumn, newColumnName) {
+        output = []
+        lg = d3.group(lookupTable, d => d[lookupKey]);
+        for(row in mainTable){
+            matchedRows = lg.get(mainTable[row][mainKey])
+            for (matchedRow in matchedRows){
+                newRow = Object.assign({}, mainTable[row])
+                newRow[newColumnName] = matchedRows[matchedRow][lookupColumn]
+                output.push(newRow)
+            }
+        }
+        return output;
+    };
+
+    var person_to_person = arrayJoin(people_relationships, topic_relationships, "topic", "topic", "person", "person2");
+
+    //var topic_to_topic = arrayJoin(topic_relationships, people_relationships, "person", "person", "topic", "topic2");
+
+    var pg = d3.rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2)
+    
+    function assembleProjection(groupedArray){
+        var linkArray = []
+        var p1 = groupedArray[0]
+        for (var i in groupedArray[1]){
+            p2 = groupedArray[1][i][0]
+            topics = groupedArray[1][i][1]
+            if (p1 < p2){
+                linkArray.push({from:p1, to:p2, topics:topics.join(", "), topicCount:topics.length})
+            }
+        }
+
+        return linkArray //people2.map(p2 => ({person1: p1, person2:p2[0]}))
+    }
+    var pgm = pg.map(assembleProjection)
+        
+    console.log(pgm)
 
       return (
     
