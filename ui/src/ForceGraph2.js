@@ -26,7 +26,7 @@ class ForceGraph extends Component {
 
         const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.name))
-        .force("charge", forceManyBody().strength(-150))
+        .force("charge", forceManyBody().strength(-200))
         .force("collide", forceCollide(27).iterations(16) )
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
   
@@ -47,14 +47,14 @@ class ForceGraph extends Component {
       .join("circle")
         .attr("r", 25)
         .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
-        .call(dragging(simulation))
-        .append("text")
-        .text(d => d.name)
-        .attr("text-anchor", "middle");
+        .call(dragging(simulation));
   
     circle.append("title")
         .text(d => d.name);
 
+    circle.append("text")
+        .text(d => d.name)
+        .attr("text-anchor", "middle")
 
     simulation.on("tick", () => {
       link
