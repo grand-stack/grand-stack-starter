@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
-import { forceSimulation, forceCollide, forceLink, forceCenter, forceX, forceY } from 'd3-force'
-import { select } from 'd3-selection'
+import { forceSimulation, forceCollide, forceLink, forceCenter, forceManyBody } from 'd3-force'
+import { select, event, drag } from 'd3-selection'
 
 class ForceGraph extends Component {
     constructor(props){
@@ -23,8 +23,8 @@ class ForceGraph extends Component {
         var simulation = forceSimulation()
         .force("link", forceLink().id(function(d) { return d.name }))
         .force("collide", forceCollide( function(d){return 15 }).iterations(16) )
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceCenter(displaySize[0] / 2, displaySize[1] / 2));
+        .force("charge", forceManyBody())
+        .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
 
     select(node)
         .selectAll("line")
@@ -96,23 +96,23 @@ class ForceGraph extends Component {
     drag = simulation => {
   
         function dragstarted(d) {
-          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          if (!event.active) simulation.alphaTarget(0.3).restart();
           d.fx = d.x;
           d.fy = d.y;
         }
         
         function dragged(d) {
-          d.fx = d3.event.x;
-          d.fy = d3.event.y;
+          d.fx = event.x;
+          d.fy = event.y;
         }
         
         function dragended(d) {
-          if (!d3.event.active) simulation.alphaTarget(0);
+          if (!event.active) simulation.alphaTarget(0);
           d.fx = null;
           d.fy = null;
         }
         
-        return d3.drag()
+        return drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended);
