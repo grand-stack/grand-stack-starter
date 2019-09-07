@@ -36,13 +36,13 @@ class App extends Component {
          return person_relationships
       }
 
-      var people_relationships = d.data.Person.map(unpackPerson).flat()
+      var people_relationships = data.Person.map(unpackPerson).flat()
       var topic_relationships = people_relationships
 
-      var group_person = d3.group(people_relationships, d => d.person)
+      var group_person = group(people_relationships, d => d.person)
       var people = Array.from(group_person.keys()).map(d=> ({'name':d, 'nodeLabel':'Person'}))     
 
-      var group_topics = d3.group(people_relationships, d => d.topic)
+      var group_topics = group(people_relationships, d => d.topic)
       var topics = Array.from(group_topics.keys()).map(d=> ({'name':d, 'nodeLabel':'Topic'}))     
  
       var node_data = people.concat(topics)
