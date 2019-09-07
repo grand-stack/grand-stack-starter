@@ -53,13 +53,13 @@ class ForceGraph extends Component {
         .data(this.props.data.nodes)
         .enter()
         .append("g")
-        .call(drag(simulation));
 
     datanodes.append("circle")
         .attr("r", 10)
         .style("fill", function(d){
             return d.nodeLabel === "Person" ? "orange" : "lightblue"
         })
+        .call(drag(simulation));
 
 
     datanodes.append("text")
