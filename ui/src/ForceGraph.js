@@ -19,8 +19,6 @@ class ForceGraph extends Component {
 
     createForceGraph() {
         const node = this.node
-        const orientation = this.props.orientation
-        const displaySize = this.props.size
         var simulation = forceSimulation()
         .force("link", forceLink().id(function(d) { return d.name }))
         .force("collide", forceCollide( function(d){return 15 }).iterations(16) )

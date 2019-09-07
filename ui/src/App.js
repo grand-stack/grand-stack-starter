@@ -46,7 +46,7 @@ class App extends Component {
       var group_topics = group(people_relationships, d => d.topic)
       var topics = Array.from(group_topics.keys()).map(d=> ({'name':d, 'nodeLabel':'Topic'}))     
  
-      var node_data = people.concat(topics)
+      var node_data = [...people, ...topics]
       
       var link_data = people_relationships.map(d => ({'source':d.person, 'target':d.topic}))
       var final_data = {nodes:node_data, links: link_data}
@@ -86,7 +86,6 @@ class App extends Component {
     }
     var p2p_links = pg.map(assembleProjectionLinks).flat()
     var p2p_data = {'nodes':node_data, 'links': p2p_links}
-    console.log(ptp_data)
 
       return (
     
@@ -95,7 +94,6 @@ class App extends Component {
           <h2>Common Interests</h2>
         </div>
         <div>
-          <BipartiteGraph data={final_data} size={[800,500]} orientation={"vertical"} />
         </div>
         <div>
           <ForceGraph data={p2p_data} size={[800,500]} />
