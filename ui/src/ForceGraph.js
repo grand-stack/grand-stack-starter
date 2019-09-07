@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
 import { forceSimulation, forceCollide, forceLink, forceCenter, forceManyBody } from 'd3-force'
-import { select, event, drag } from 'd3-selection'
+import { select, event } from 'd3-selection'
+import { drag } from 'd3-drag'
 
 class ForceGraph extends Component {
     constructor(props){

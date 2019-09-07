@@ -15,7 +15,8 @@
     "react-scripts": "^3.1.1",
     "d3-force": "^2.0.0",
     "d3-selection": "^1.4.0",
-    "d3-array":"^2.3.1"
+    "d3-array":"^2.3.1",
+    "d3-drag":"^1.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
