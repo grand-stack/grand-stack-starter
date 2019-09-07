@@ -71,7 +71,7 @@ class App extends Component {
 
     var pg = rollups(person_to_person, v => v.map(w => w.topic), d => d.person, d => d.person2);
 
-    var tg = rollups(topic_to_topic, v => v.map(w => w.topic), d => d.person, d => d.person2);
+    var tg = rollups(topic_to_topic, v => v.map(w => w.topic), d => d.topic, d => d.topic2);
 
     function assembleProjectionLinks(groupedArray){
         var linkArray = []
@@ -100,7 +100,7 @@ class App extends Component {
         <div>
         </div>
         <div>
-          <ForceGraph data={p2p_data} size={[800,500]} />
+          <ForceGraph data={t2t_data} size={[800,500]} />
         </div>
       </div>
     )}}
