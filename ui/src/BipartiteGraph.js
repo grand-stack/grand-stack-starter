@@ -40,11 +40,14 @@ class BipartiteGraph extends Component {
             .attr("stroke", "black")
 
         const circle = select(node).append("g")
+            .selectAll(".bipartite g")
+            .data(nodes)
+            .join("g");
+
+        circle.append("circle")
             .attr("stroke", "#fff")
             .attr("stroke-width", 1.5)
             .selectAll(".bipartite circle")
-            .data(nodes)
-            .join("circle")
             .attr("r", 10)
             .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
             .each(function(d, i){
@@ -57,6 +60,13 @@ class BipartiteGraph extends Component {
         circle.append("title")
             .text(d => d.name)
             ;
+
+        circle.append("text")
+            .text(d => d.name)
+            .attr('x',  d => d.nodeLabel ==="Person"?-10:10)
+            .attr("writing-mode", d => orientation === "horizontal"? "tb": "lr")
+            .attr("text-anchor", d => d.nodeLabel ==="Person"?"end":"start");
+        
     
             simulation.on("tick", () => {
                 link

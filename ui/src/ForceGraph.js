@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { forceSimulation, forceCollide, forceLink, forceCenter, forceManyBody } from 'd3-force'
+import { forceSimulation, forceLink, forceCollide, forceCenter, forceManyBody } from 'd3-force'
 import { select, event } from 'd3-selection'
 import { drag } from 'd3-drag'
 
@@ -20,82 +20,70 @@ class ForceGraph extends Component {
 
     createForceGraph() {
         const node = this.node
-        const displaySize = this.props.size
-        var simulation = forceSimulation()
-        .force("link", forceLink().id(function(d) { return d.name }))
-        .force("collide", forceCollide( function(d){return 15 }).iterations(16) )
-        .force("charge", forceManyBody())
+        const links = this.props.data.links.map(d => Object.create(d));
+        const nodes = this.props.data.nodes.map(d => Object.create(d));
+        const displaySize = this.props.size;
+
+        const simulation = forceSimulation(nodes)
+        .force("link", forceLink(links).id(d => d.name))
+        .force("charge", forceManyBody().strength(-200))
+        .force("collide", forceCollide(27).iterations(16) )
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
 
-    select(node)
-        .selectAll("line")
-        .data(this.props.data.links)
-        .enter()
-        .append("line")
+    select(node).attr('class', 'force')
+  
+    const link = select(node).append("g")
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+      .selectAll(".force line")
+      .data(links)
+      .join("line")
+        .attr("stroke-width", d => d.commonalityCount);
+  
+    const circle = select(node).append("g")
+        .selectAll(".force g")
+        .data(nodes)
+        .join("g");
     
-    select(node)
-        .selectAll("line")
-        .data(this.props.data.links)
-        .exit()
-        .remove()
-        
-    var lines = select(node)
-        .selectAll("line")
-        .data(this.props.data.links)
-        .attr("stroke", "black")
-    
+     circle.append("circle")
+        .attr("r", 25)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
+        .call(dragging(simulation));
 
-    var main_node = select(node)
+    circle.append("title")
+        .text(d => d.name);
 
-    var datanodes = main_node.append("g")
-        .attr("class", "nodes")
-        .selectAll("g")
-        .data(this.props.data.nodes)
+
+    var text = circle.append("text")
+        .attr("y", d => ((d.name.match(/\s/g) || []).length) * -7.5 - 10);
+
+    text.selectAll("tespan.text")
+        .data(d => d.name.split(" "))
         .enter()
-        .append("g")
-
-    datanodes.append("circle")
-        .attr("r", 10)
-        .style("fill", function(d){
-            return d.nodeLabel === "Person" ? "orange" : "lightblue"
-        })
-        .call(drag(simulation));
-
-
-    datanodes.append("text")
-        .text(function(d) {
-            return d.name
-        })
-        .attr('x',  d => d.nodeLabel ==="Person"?-10:10)
+        .append("tspan")
+        .attr("class", "text")
+        .text(d => d)
+        .attr("dy", 16)
+        .attr("x", 0)
+        .attr("dx", 0)
         .attr("text-anchor", "middle")
-    
-    datanodes.append("title")
-        .text(function(d){
-            return d.name
-        })
 
-    var ticked = function() {
-        lines
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
 
-        datanodes
-        .attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-          })
-        } 
 
-    simulation
-        .nodes(this.props.data.nodes)
-        .on("tick", ticked);
+    simulation.on("tick", () => {
+      link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+  
+      circle
+          .attr("transform", d => "translate("+ d.x + "," + d.y + ")");
+    });
 
-    simulation.force("link")
-        .links(this.props.data.links);    
-    }
-
-    drag = simulation => {
+    function dragging(simulation) {
   
         function dragstarted(d) {
           if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -119,6 +107,9 @@ class ForceGraph extends Component {
             .on("drag", dragged)
             .on("end", dragended);
       }
+  
+  
+  }
 
 render(){
     return <svg ref={node => this.node = node}

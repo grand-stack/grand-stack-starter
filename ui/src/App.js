@@ -3,7 +3,7 @@ import './App.css';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import BipartiteGraph from './BipartiteGraph';
-import ForceGraph from './ForceGraph2';
+import ForceGraph from './ForceGraph';
 import { group, rollups } from 'd3-array';
 
 class App extends Component {
