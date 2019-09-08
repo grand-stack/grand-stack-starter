@@ -55,9 +55,17 @@ class ForceGraph extends Component {
     circle.append("title")
         .text(d => d.name);
 
-    circle.append("text")
-        .text(d => d.name)
+
+    var text = circle.append("text");
+
+    text.selectAll("tespan.text")
+        .data(d => d.name.split(" "))
+        .enter()
+        .append("tspan")
+        .attr("class", "text")
+        .text(d => d)
         .attr("text-anchor", "middle")
+
 
     simulation.on("tick", () => {
       link
