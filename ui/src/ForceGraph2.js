@@ -29,12 +29,13 @@ class ForceGraph extends Component {
         .force("charge", forceManyBody().strength(-200))
         .force("collide", forceCollide(27).iterations(16) )
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
-  
+
+    node.attr('class', 'force')
   
     const link = select(node).append("g")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
-      .selectAll("line")
+      .selectAll(".force line")
       .data(links)
       .join("line")
         .attr("stroke-width", d => d.commonalityCount);
@@ -42,7 +43,7 @@ class ForceGraph extends Component {
     const circle = select(node).append("g")
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
-        .selectAll("circle")
+        .selectAll(".force circle")
         .data(nodes)
         .join("circle")
         .attr("r", 25)

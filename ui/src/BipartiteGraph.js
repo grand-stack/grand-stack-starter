@@ -24,6 +24,8 @@ class BipartiteGraph extends Component {
         const orientation = this.props.orientation
         const displaySize = this.props.size
 
+        node.attr('class', 'bipartite')
+
         const simulation = forceSimulation(nodes)
             .force("link", forceLink(links).id(d => d.name))
             .force("collide", forceCollide(15).iterations(16) )
@@ -32,7 +34,7 @@ class BipartiteGraph extends Component {
         const link = select(node).append("g")
             .attr("stroke", "#999")
             .attr("stroke-opacity", 0.6)
-            .selectAll("line")
+            .selectAll(".bipartite line")
             .data(links)
             .join("line")
             .attr("stroke", "black")
@@ -40,10 +42,9 @@ class BipartiteGraph extends Component {
         const circle = select(node).append("g")
             .attr("stroke", "#fff")
             .attr("stroke-width", 1.5)
-            .selectAll("g")
+            .selectAll(".bipartite circle")
             .data(nodes)
-            .join("g")
-            .append("circle")
+            .join("circle")
             .attr("r", 10)
             .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
             .each(function(d, i){
@@ -68,7 +69,7 @@ class BipartiteGraph extends Component {
                     .attr("cy", d => d.y);
               });
 
-  
+   
     }
 
 render(){
