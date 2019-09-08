@@ -24,7 +24,7 @@ class BipartiteGraph extends Component {
         const orientation = this.props.orientation
         const displaySize = this.props.size
 
-        node.attr('class', 'bipartite')
+        select(node).attr('class', 'bipartite')
 
         const simulation = forceSimulation(nodes)
             .force("link", forceLink(links).id(d => d.name))

@@ -30,7 +30,7 @@ class ForceGraph extends Component {
         .force("collide", forceCollide(27).iterations(16) )
         .force("center", forceCenter(displaySize[0] / 2, displaySize[1] / 2));
 
-    node.attr('class', 'force')
+    select(node).attr('class', 'force')
   
     const link = select(node).append("g")
         .attr("stroke", "#999")
