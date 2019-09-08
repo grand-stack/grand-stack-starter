@@ -64,6 +64,7 @@ class BipartiteGraph extends Component {
         circle.append("text")
             .text(d => d.name)
             .attr('x',  d => d.nodeLabel ==="Person"?-10:10)
+            .attr('y',  -5)
             .attr("writing-mode", d => orientation === "horizontal"? "tb": "lr")
             .attr("text-anchor", d => d.nodeLabel ==="Person"?"end":"start");
         

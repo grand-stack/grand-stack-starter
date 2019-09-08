@@ -95,15 +95,15 @@ class App extends Component {
     
       <div className='App'>
         <div className='App-header'>
-          <h2>Common Interests</h2>
+          <h2>Meetup Mixer</h2>
         </div>
+        <div id="personToTopic">
           <BipartiteGraph data={final_data} size={[800,500]} orientation={"vertical"} />
-        <div>
         </div>
-        <div>
+        <div id="topicToTopic">
           <ForceGraph data={t2t_data} size={[800,500]} />
         </div>
-        <div>
+        <div id="personToPerson">
           <ForceGraph data={p2p_data} size={[800,500]} />
         </div>
 
