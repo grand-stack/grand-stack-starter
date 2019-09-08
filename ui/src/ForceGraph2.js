@@ -67,8 +67,7 @@ class ForceGraph extends Component {
           .attr("y2", d => d.target.y);
   
       circle
-          .attr("cx", d => d.x)
-          .attr("cy", d => d.y);
+          .attr("transform", d => "translate("+ d.x + "," + d.y + ")");
     });
 
     function dragging(simulation) {
