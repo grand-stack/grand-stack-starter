@@ -52,8 +52,9 @@ class BipartiteGraph extends Component {
                     d.fy = d.nodeLabel === "Person" ? displaySize[1]/3:displaySize[1]*2/3}
                 else{
                     d.fx = d.nodeLabel === "Person" ? displaySize[0]/3:displaySize[0]*2/3}
-            })
-            .append("title")
+            });
+
+        circle.append("title")
             .text(d => d.name)
             ;
     
