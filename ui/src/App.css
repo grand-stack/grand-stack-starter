@@ -21,7 +21,16 @@
   font-size: large;
 }
 
-#PersonToPerson
-{
-  float:left;
+
+#wraper {
+  padding: 5%;
+  text-align: center;
+  width: 80%;
 }
+
+#personToPerson, #topicToTopic {
+    background: #dddddd;
+    display: inline-block;
+    padding: 2%;
+  }
+
