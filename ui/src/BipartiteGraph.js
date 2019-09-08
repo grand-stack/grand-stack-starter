@@ -11,7 +11,12 @@ class BipartiteGraph extends Component {
 
     componentDidMount() {
         this.createBipartiteGraph()
-    }
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 30000);
+      }
+      
+      componentWillUnmount() {
+        clearInterval(this.interval);
+      }
 
     componentDidUpdate() {
         this.createBipartiteGraph()

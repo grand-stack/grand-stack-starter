@@ -12,7 +12,12 @@ class ForceGraph extends Component {
 
     componentDidMount() {
         this.createForceGraph()
-    }
+        this.interval = setInterval(() => this.setState({ time: Date.now() }), 30000);
+      }
+      
+      componentWillUnmount() {
+        clearInterval(this.interval);
+      }
 
     componentDidUpdate() {
         this.createForceGraph()
