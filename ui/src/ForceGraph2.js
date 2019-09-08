@@ -41,14 +41,14 @@ class ForceGraph extends Component {
         .attr("stroke-width", d => d.commonalityCount);
   
     const circle = select(node).append("g")
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1.5)
         .selectAll(".force g")
         .data(nodes)
         .join("g");
     
      circle.append("circle")
         .attr("r", 25)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
         .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
         .call(dragging(simulation));
 
