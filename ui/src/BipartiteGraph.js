@@ -43,19 +43,18 @@ class BipartiteGraph extends Component {
             .selectAll(".bipartite g.circle")
             .data(nodes)
             .join("g")
-            .attr('class', 'circle')
+            .attr('class', 'circle');
+
+        circle.append("circle")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .attr("r", 10)
             .each(function(d, i){
                 if(orientation === "horizontal"){
                     d.fy = d.nodeLabel === "Person" ? displaySize[1]/3:displaySize[1]*2/3}
                 else{
                     d.fx = d.nodeLabel === "Person" ? displaySize[0]/3:displaySize[0]*2/3}
-            });
-
-        circle.append("circle")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 1.5)
-            .selectAll(".bipartite circle")
-            .attr("r", 10)
+            })
             .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue");
 
         circle.append("title")
