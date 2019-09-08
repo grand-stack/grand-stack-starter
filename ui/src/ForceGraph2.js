@@ -56,7 +56,8 @@ class ForceGraph extends Component {
         .text(d => d.name);
 
 
-    var text = circle.append("text");
+    var text = circle.append("text")
+        .attr("y", d => ((d.name.match(/\s/g) || []).length) * -7.5 - 10);
 
     text.selectAll("tespan.text")
         .data(d => d.name.split(" "))
@@ -64,7 +65,11 @@ class ForceGraph extends Component {
         .append("tspan")
         .attr("class", "text")
         .text(d => d)
+        .attr("dy", 16)
+        .attr("x", 0)
+        .attr("dx", 0)
         .attr("text-anchor", "middle")
+
 
 
     simulation.on("tick", () => {
