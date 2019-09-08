@@ -40,22 +40,23 @@ class BipartiteGraph extends Component {
             .attr("stroke", "black")
 
         const circle = select(node).append("g")
-            .selectAll(".bipartite g")
+            .selectAll(".bipartite g.circle")
             .data(nodes)
-            .join("g");
-
-        circle.append("circle")
-            .attr("stroke", "#fff")
-            .attr("stroke-width", 1.5)
-            .selectAll(".bipartite circle")
-            .attr("r", 10)
-            .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue")
+            .join("g")
+            .attr('class', 'circle')
             .each(function(d, i){
                 if(orientation === "horizontal"){
                     d.fy = d.nodeLabel === "Person" ? displaySize[1]/3:displaySize[1]*2/3}
                 else{
                     d.fx = d.nodeLabel === "Person" ? displaySize[0]/3:displaySize[0]*2/3}
             });
+
+        circle.append("circle")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .selectAll(".bipartite circle")
+            .attr("r", 10)
+            .attr("fill", d => d.nodeLabel === "Person" ? "orange" : "lightblue");
 
         circle.append("title")
             .text(d => d.name)
@@ -76,8 +77,7 @@ class BipartiteGraph extends Component {
                     .attr("y2", d => d.target.y);
             
                 circle
-                    .attr("cx", d => d.x)
-                    .attr("cy", d => d.y);
+                    .attr("transform", d => "translate("+ d.x + "," + d.y + ")");
               });
 
    
