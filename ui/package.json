@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "UI app for GRANDstack",
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.2",
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
     "apollo-boost": "^0.3.1",
@@ -10,7 +11,6 @@
     "graphql-tag": "^2.10.1",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
-    "react-apollo": "^2.5.8",
     "react-dom": "^16.9.0",
     "react-scripts": "^3.1.1"
   },
