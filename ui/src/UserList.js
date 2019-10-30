@@ -1,5 +1,5 @@
 import React from "react";
-import { Query } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import "./UserList.css";
 import { withStyles } from "@material-ui/core/styles";
@@ -33,182 +33,155 @@ const styles = theme => ({
   }
 });
 
-class UserList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      order: "asc",
-      orderBy: "name",
-      page: 0,
-      rowsPerPage: 10,
-      usernameFilter: ""
-    };
-  }
-
-  handleSortRequest = property => {
-    const orderBy = property;
-    let order = "desc";
-
-    if (this.state.orderBy === property && this.state.order === "desc") {
-      order = "asc";
+const GET_USER = gql`
+  query usersPaginateQuery(
+    $first: Int
+    $offset: Int
+    $orderBy: [_UserOrdering]
+    $filter: _UserFilter
+  ) {
+    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
+      id
+      name
+      avgStars
+      numReviews
     }
+  }
+`;
 
-    this.setState({ order, orderBy });
-  };
+function UserList(props) {
+  const { classes } = props;
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("name");
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [filterState, setFilterState] = React.useState({ usernameFilter: "" });
 
-  getFilter = () => {
-    return this.state.usernameFilter.length > 0
-      ? { name_contains: this.state.usernameFilter }
+  const getFilter = () => {
+    return filterState.usernameFilter.length > 0
+      ? { name_contains: filterState.usernameFilter }
       : {};
   };
 
-  handleFilterChange = filterName => event => {
-    const val = event.target.value;
+  const { loading, data, error } = useQuery(GET_USER, {
+    variables: {
+      first: rowsPerPage,
+      offset: rowsPerPage * page,
+      orderBy: orderBy + "_" + order,
+      filter: getFilter()
+    }
+  });
 
-    this.setState({
-      [filterName]: val
-    });
+  const handleSortRequest = property => {
+    const newOrderBy = property;
+    let newOrder = "desc";
+
+    if (orderBy === property && order === "desc") {
+      newOrder = "asc";
+    }
+
+    setOrder(newOrder);
+    setOrderBy(newOrderBy);
   };
 
-  render() {
-    const { order, orderBy } = this.state;
-    const { classes } = this.props;
-    return (
-      <Paper className={classes.root}>
-        <Typography variant="h2" gutterBottom>
-          User List
-        </Typography>
-        <TextField
-          id="search"
-          label="User Name Contains"
-          className={classes.textField}
-          value={this.state.usernameFilter}
-          onChange={this.handleFilterChange("usernameFilter")}
-          margin="normal"
-          variant="outlined"
-          type="text"
-          InputProps={{
-            className: classes.input
-          }}
-        />
+  const handleFilterChange = filterName => event => {
+    const val = event.target.value;
 
-        <Query
-          query={gql`
-            query usersPaginateQuery(
-              $first: Int
-              $offset: Int
-              $orderBy: [_UserOrdering]
-              $filter: _UserFilter
-            ) {
-              User(
-                first: $first
-                offset: $offset
-                orderBy: $orderBy
-                filter: $filter
-              ) {
-                id
-                name
-                avgStars
-                numReviews
-              }
-            }
-          `}
-          variables={{
-            first: this.state.rowsPerPage,
-            offset: this.state.rowsPerPage * this.state.page,
-            orderBy: this.state.orderBy + "_" + this.state.order,
-            filter: this.getFilter()
-          }}
-        >
-          {({ loading, error, data }) => {
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>Error</p>;
+    setFilterState(oldFilterState => ({
+      ...oldFilterState,
+      [filterName]: val
+    }));
+  };
 
-            return (
-              <Table className={this.props.classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      key="name"
-                      sortDirection={orderBy === "name" ? order : false}
-                    >
-                      <Tooltip
-                        title="Sort"
-                        placement="bottom-start"
-                        enterDelay={300}
-                      >
-                        <TableSortLabel
-                          active={orderBy === "name"}
-                          direction={order}
-                          onClick={() => this.handleSortRequest("name")}
-                        >
-                          Name
-                        </TableSortLabel>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell
-                      key="avgStars"
-                      sortDirection={orderBy === "avgStars" ? order : false}
-                      numeric
-                    >
-                      <Tooltip
-                        title="Sort"
-                        placement="bottom-end"
-                        enterDelay={300}
-                      >
-                        <TableSortLabel
-                          active={orderBy === "avgStars"}
-                          direction={order}
-                          onClick={() => this.handleSortRequest("avgStars")}
-                        >
-                          Average Stars
-                        </TableSortLabel>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell
-                      key="numReviews"
-                      sortDirection={orderBy === "numReviews" ? order : false}
-                      numeric
-                    >
-                      <Tooltip
-                        title="Sort"
-                        placement="bottom-start"
-                        enterDelay={300}
-                      >
-                        <TableSortLabel
-                          active={orderBy === "numReviews"}
-                          direction={order}
-                          onClick={() => this.handleSortRequest("numReviews")}
-                        >
-                          Number of Reviews
-                        </TableSortLabel>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.User.map(n => {
-                    return (
-                      <TableRow key={n.id}>
-                        <TableCell component="th" scope="row">
-                          {n.name}
-                        </TableCell>
-                        <TableCell numeric>
-                          {n.avgStars ? n.avgStars.toFixed(2) : "-"}
-                        </TableCell>
-                        <TableCell numeric>{n.numReviews}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            );
-          }}
-        </Query>
-      </Paper>
-    );
-  }
+  return (
+    <Paper className={classes.root}>
+      <Typography variant="h2" gutterBottom>
+        User List
+      </Typography>
+      <TextField
+        id="search"
+        label="User Name Contains"
+        className={classes.textField}
+        value={filterState.usernameFilter}
+        onChange={handleFilterChange("usernameFilter")}
+        margin="normal"
+        variant="outlined"
+        type="text"
+        InputProps={{
+          className: classes.input
+        }}
+      />
+      {loading && !error && <p>Loading...</p>}
+      {error && !loading && <p>Error</p>}
+      {data && !loading && !error && (
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                key="name"
+                sortDirection={orderBy === "name" ? order : false}
+              >
+                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderBy === "name"}
+                    direction={order}
+                    onClick={() => handleSortRequest("name")}
+                  >
+                    Name
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+              <TableCell
+                key="avgStars"
+                sortDirection={orderBy === "avgStars" ? order : false}
+                numeric
+              >
+                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderBy === "avgStars"}
+                    direction={order}
+                    onClick={() => handleSortRequest("avgStars")}
+                  >
+                    Average Stars
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+              <TableCell
+                key="numReviews"
+                sortDirection={orderBy === "numReviews" ? order : false}
+                numeric
+              >
+                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderBy === "numReviews"}
+                    direction={order}
+                    onClick={() => handleSortRequest("numReviews")}
+                  >
+                    Number of Reviews
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.User.map(n => {
+              return (
+                <TableRow key={n.id}>
+                  <TableCell component="th" scope="row">
+                    {n.name}
+                  </TableCell>
+                  <TableCell numeric>
+                    {n.avgStars ? n.avgStars.toFixed(2) : "-"}
+                  </TableCell>
+                  <TableCell numeric>{n.numReviews}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      )}
+    </Paper>
+  );
 }
 
 export default withStyles(styles)(UserList);
