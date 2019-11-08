@@ -83,18 +83,7 @@ now secret add NEO4J_PASSWORD <YOUR_DATABASE_USER_PASSWORD_HERE>
 
 ## Docker Compose
 
-To use docker-compose to quickly start please make the following changes
-
-api/.env:
-```
-NEO4J_URI=bolt://neo4j:7687
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=letmein
-GRAPHQL_LISTEN_PORT=4000
-GRAPHQL_URI=http://api:4000
-```
-
-Now you can quickly start via:
+You can quickly start via:
 ```
 docker-compose up -d
 ```
