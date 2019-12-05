@@ -19,7 +19,7 @@ import {
 const styles = theme => ({
   root: {
     maxWidth: 700,
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: "auto",
     margin: "auto"
   },
@@ -27,8 +27,8 @@ const styles = theme => ({
     minWidth: 700
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     minWidth: 300
   }
 });
@@ -134,7 +134,6 @@ function UserList(props) {
               <TableCell
                 key="avgStars"
                 sortDirection={orderBy === "avgStars" ? order : false}
-                numeric
               >
                 <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
                   <TableSortLabel
@@ -149,7 +148,6 @@ function UserList(props) {
               <TableCell
                 key="numReviews"
                 sortDirection={orderBy === "numReviews" ? order : false}
-                numeric
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
@@ -170,10 +168,10 @@ function UserList(props) {
                   <TableCell component="th" scope="row">
                     {n.name}
                   </TableCell>
-                  <TableCell numeric>
+                  <TableCell>
                     {n.avgStars ? n.avgStars.toFixed(2) : "-"}
                   </TableCell>
-                  <TableCell numeric>{n.numReviews}</TableCell>
+                  <TableCell>{n.numReviews}</TableCell>
                 </TableRow>
               );
             })}
