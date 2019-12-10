@@ -2,7 +2,7 @@
 
 # GRANDstack Starter
 
-This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (a React app) and the API app (GraphQL server).
+This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (in React and Angular flavors) and the API app (GraphQL server).
 
 [![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=rPC71lUhK_I "Hands On With The GRANDstack Starter")
 
@@ -23,7 +23,7 @@ A good tutorial can be found here: https://www.youtube.com/watch?v=rPC71lUhK_I
 3. Create a new DB by clicking "New Graph", and clicking "create local graph".
 4. Set password to "letmein" (as suggested by `api/.env`), and click "Create".
 5. Make sure that the default credentials in `api/.env` are used. Leave them as follows: `NEO4J_URI=bolt://localhost:7687 NEO4J_USER=neo4j NEO4J_PASSWORD=letmein`
-6.  Click "Manage".
+6. Click "Manage".
 7. Click "Plugins".
 8. Find "APOC" and click "Install".
 9. Click the "play" button at the top of left the screen, which should start the server. _(screenshot 2)_
@@ -35,7 +35,8 @@ A good tutorial can be found here: https://www.youtube.com/watch?v=rPC71lUhK_I
 *Install dependencies*
 
 ```
-(cd ./ui && npm install)
+(cd ./ui-react && npm install)
+(cd ./ui-angular && npm install)
 (cd ./api && npm install)
 ```
 
@@ -46,16 +47,27 @@ cd ./api && npm start
 
 ![](api/img/graphql-playground.png)
 
-### [`/ui`](./ui)
+### [`/ui-react`](./ui-react)
 
-This will start the GraphQL API in the foreground, so in another terminal session start the UI development server:
+This will start the GraphQL API in the foreground, so in another terminal session start the React UI development server:
 
-*Start UI server*
+*Start the React UI server*
 ```
-cd ./ui && npm start
+cd ./ui-react && npm start
 ```
 
-![](ui/img/default-app.png)
+![](ui-react/img/default-app.png)
+
+### [`/ui-angular`](./ui-angular)
+
+A UI built with [Angular](https://angular.io), [Apollo](https://www.apollographql.com/docs/angular/) and the [Clarity Design System](https://clarity.design) is also available.
+
+*Start the Angular UI server*
+```
+cd ./ui-angular && npm start
+```
+
+![](ui-angular/img/angular-ui.jpg)
 
 See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
 
@@ -78,7 +90,7 @@ now secret add NEO4J_PASSWORD <YOUR_DATABASE_USER_PASSWORD_HERE>
 ### Zeit Now v1
 
 1. Run `now` in `/api` and choose `package.json` when prompted.
-1. Set `REACT_APP_GRAPHQL_API` based on the API deployment URL from step 1 in `ui/.env`
+1. Set `REACT_APP_GRAPHQL_API` based on the API deployment URL from step 1 in `ui-react/.env`
 1. Run `now` in `/env` and choose `package.json` when prompted.
 
 ## Docker Compose

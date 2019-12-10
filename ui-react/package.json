@@ -1,5 +1,5 @@
 {
-  "name": "grand-stack-starter-ui",
+  "name": "grand-stack-starter-ui-react",
   "version": "0.0.1",
   "description": "UI app for GRANDstack",
   "dependencies": {

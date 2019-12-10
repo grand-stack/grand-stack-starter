@@ -1,0 +1,38 @@
+<div class="alert alert-danger" role="alert" *ngIf="!!error">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+      </div>
+      <span class="alert-text">
+        {{error}}
+      </span>
+    </div>
+  </div>
+</div>
+
+<clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
+    <clr-dg-column clrDgField="name">Name</clr-dg-column>
+    <clr-dg-column clrDgField="address">Address</clr-dg-column>
+    <clr-dg-column clrDgField="city">City</clr-dg-column>
+    <clr-dg-column clrDgField="state">State</clr-dg-column>
+    <clr-dg-column clrDgSortBy="avgStars" clrDgColType="number">
+      Average Stars
+    </clr-dg-column>
+  
+    <clr-dg-row *ngFor="let business of (businesses | async)">
+        <clr-dg-cell>{{business.name}}</clr-dg-cell>
+        <clr-dg-cell>{{business.address}}</clr-dg-cell>
+        <clr-dg-cell>{{business.city}}</clr-dg-cell>
+        <clr-dg-cell>{{business.state}}</clr-dg-cell>
+        <clr-dg-cell>{{business.avgStars | number: '1.1-1'}}</clr-dg-cell>
+    </clr-dg-row>
+  
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="total">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Items per page</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+  
