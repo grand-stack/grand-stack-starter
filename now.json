@@ -2,7 +2,7 @@
   "version": 2,
   "name": "grand-stack-starter",
   "builds": [
-    { "src": "api/src/index.js", "use": "@now/node-server" },
+    { "src": "api/src/index.js", "use": "@now/node" },
     {
       "src": "ui/package.json",
       "use": "@now/static-build",
@@ -32,8 +32,15 @@
       "dest": "/ui/index.html"
     }
   ],
+  "build": {
+    "env": {
+      "REACT_APP_GRAPHQL_URI": "/graphql",
+      "NEO4J_URI": "@neo4j_uri",
+      "NEO4J_USER": "@neo4j_user",
+      "NEO4J_PASSWORD": "@neo4j_password"
+    }
+  },
   "env": {
-    "REACT_APP_GRAPHQL_URI": "/graphql",
     "NEO4J_URI": "@neo4j_uri",
     "NEO4J_USER": "@neo4j_user",
     "NEO4J_PASSWORD": "@neo4j_password"
