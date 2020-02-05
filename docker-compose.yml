@@ -30,7 +30,7 @@ services:
     - neo4j
 
   ui:
-    build: ./ui
+    build: ./ui-react
     ports:
       - 3000:3000
     environment:
