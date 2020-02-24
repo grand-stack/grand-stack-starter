@@ -21,8 +21,8 @@
     "apollo-server": "^2.8.2",
     "dotenv": "^7.0.0",
     "graphql-tag": "^2.10.1",
-    "neo4j-driver": "^1.7.5",
-    "neo4j-graphql-js": "^2.7.1",
+    "neo4j-driver": "^4.0.1",
+    "neo4j-graphql-js": "^2.12.1",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
