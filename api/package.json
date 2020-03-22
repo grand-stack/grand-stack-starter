@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "./node_modules/.bin/nodemon --watch src --ext js,graphql --exec babel-node  src/index.js",
     "build": "babel src -d build && shx cp .env build && shx cp src/schema.graphql build",
-    "now-build": "babel src -d build && (shx cp .env build>/dev/null ||:) && shx cp src/schema.graphql build",
+    "now-build": "babel src -d build && shx cp src/schema.graphql build",
     "start": "npm run build && node build/index.js",
     "seedDb": "./node_modules/.bin/babel-node src/seed/seed-db.js"
   },
