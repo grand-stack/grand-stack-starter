@@ -103,15 +103,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedView: "Home",
       open: true
     };
-  }
-
-  setSelectedView(viewName) {
-    this.setState({
-      selectedView: viewName
-    });
   }
 
   handleDrawerOpen = () => {
