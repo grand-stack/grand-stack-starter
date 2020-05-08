@@ -29,7 +29,11 @@ const driver = neo4j.driver(
   neo4j.auth.basic(
     process.env.NEO4J_USER || "neo4j",
     process.env.NEO4J_PASSWORD || "neo4j"
-  )
+  ),
+  // The newest version of the Neo4j driver requires these settings if you're using Aura 
+  {
+  encrypted: process.env.NODE_ENV ? "ENCRYPTION_OFF" : "ENCRYPTION_ON" 
+  }
 );
 
 /*
