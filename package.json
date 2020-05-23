@@ -9,12 +9,13 @@
     "grandstack": "^0.0.6",
     "husky": ">=4",
     "lint-staged": ">=10",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
     "start": "node start-dev.js",
     "build": "node build.js",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+    "format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx}\""
   },
   "husky": {
     "hooks": {
