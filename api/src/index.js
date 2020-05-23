@@ -1,11 +1,11 @@
 import { typeDefs } from "./graphql-schema";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
-import neo4j from 'neo4j-driver';
+import neo4j from "neo4j-driver";
 import { makeAugmentedSchema } from "neo4j-graphql-js";
 import dotenv from "dotenv";
 
-// set environment variables from ../.env
+// set environment variables from .env
 dotenv.config();
 
 const app = express();
@@ -19,7 +19,7 @@ const app = express();
  */
 
 const schema = makeAugmentedSchema({
-  typeDefs
+  typeDefs,
 });
 
 /*
@@ -33,9 +33,9 @@ const driver = neo4j.driver(
     process.env.NEO4J_USER || "neo4j",
     process.env.NEO4J_PASSWORD || "neo4j"
   ),
-  // The newest version of the Neo4j driver requires these settings if you're using Aura 
+  // The newest version of the Neo4j driver requires these settings if you're using Aura
   {
-  encrypted: process.env.NODE_ENV ? "ENCRYPTION_OFF" : "ENCRYPTION_ON" 
+    encrypted: process.env.NEO4J_ENCRYPTED ? "ENCRYPTION_ON" : "ENCRYPTION_OFF",
   }
 );
 
@@ -46,22 +46,23 @@ const driver = neo4j.driver(
  * generated resolvers to connect to the database.
  */
 const server = new ApolloServer({
-  context: { driver },
+  context: { driver, neo4jDatabase: process.env.NEO4J_DATABASE },
   schema: schema,
   introspection: true,
-  playground: true
+  playground: true,
 });
 
-// Specify port and path for GraphQL endpoint
-const port = process.env.GRAPHQL_LISTEN_PORT || 4001;
-const path = "/graphql";
+// Specify host, port and path for GraphQL endpoint
+const port = process.env.GRAPHQL_SERVER_PORT || 4001;
+const path = process.env.GRAPHQL_SERVER_PATH || "/graphql";
+const host = process.env.GRAPHQL_SERVER_HOST || "0.0.0.0";
 
 /*
-* Optionally, apply Express middleware for authentication, etc
-* This also also allows us to specify a path for the GraphQL endpoint
-*/
-server.applyMiddleware({app, path});
+ * Optionally, apply Express middleware for authentication, etc
+ * This also also allows us to specify a path for the GraphQL endpoint
+ */
+server.applyMiddleware({ app, path });
 
-app.listen({port, path}, () => {
-  console.log(`GraphQL server ready at http://localhost:${port}${path}`);
+app.listen({ host, port, path }, () => {
+  console.log(`GraphQL server ready at http://${host}:${port}${path}`);
 });

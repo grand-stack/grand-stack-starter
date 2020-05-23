@@ -8,14 +8,25 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 dotenv.config();
 
+const {
+  GRAPHQL_SERVER_HOST: host,
+  GRAPHQL_SERVER_PORT: port,
+  GRAPHQL_SERVER_PATH: path,
+} = process.env;
+
+const uri = `http://${host}:${port}${path}`;
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: process.env.GRAPHQL_URI, fetch }),
-  cache: new InMemoryCache()
+  link: new HttpLink({ uri, fetch }),
+  cache: new InMemoryCache(),
 });
 
 client
   .mutate({
-    mutation: gql(seedmutations)
+    mutation: gql(seedmutations),
   })
-  .then(data => console.log(data))
-  .catch(error => console.error(error));
+  .then((data) => {
+    console.log(data);
+    console.log(`Database seeded! You can now query your GraphQL API at ${uri} `);
+  })
+  .catch((error) => console.error(error));
