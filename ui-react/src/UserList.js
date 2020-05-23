@@ -1,8 +1,8 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import "./UserList.css";
-import { withStyles } from "@material-ui/core/styles";
+import React from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import './UserList.css'
+import { withStyles } from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -13,25 +13,25 @@ import {
   Paper,
   TableSortLabel,
   Typography,
-  TextField
-} from "@material-ui/core";
+  TextField,
+} from '@material-ui/core'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     maxWidth: 700,
     marginTop: theme.spacing(3),
-    overflowX: "auto",
-    margin: "auto"
+    overflowX: 'auto',
+    margin: 'auto',
   },
   table: {
-    minWidth: 700
+    minWidth: 700,
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    minWidth: 300
-  }
-});
+    minWidth: 300,
+  },
+})
 
 const GET_USER = gql`
   query usersPaginateQuery(
@@ -47,51 +47,51 @@ const GET_USER = gql`
       numReviews
     }
   }
-`;
+`
 
 function UserList(props) {
-  const { classes } = props;
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("name");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filterState, setFilterState] = React.useState({ usernameFilter: "" });
+  const { classes } = props
+  const [order, setOrder] = React.useState('asc')
+  const [orderBy, setOrderBy] = React.useState('name')
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [filterState, setFilterState] = React.useState({ usernameFilter: '' })
 
   const getFilter = () => {
     return filterState.usernameFilter.length > 0
       ? { name_contains: filterState.usernameFilter }
-      : {};
-  };
+      : {}
+  }
 
   const { loading, data, error } = useQuery(GET_USER, {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
-      orderBy: orderBy + "_" + order,
-      filter: getFilter()
+      orderBy: orderBy + '_' + order,
+      filter: getFilter(),
+    },
+  })
+
+  const handleSortRequest = (property) => {
+    const newOrderBy = property
+    let newOrder = 'desc'
+
+    if (orderBy === property && order === 'desc') {
+      newOrder = 'asc'
     }
-  });
 
-  const handleSortRequest = property => {
-    const newOrderBy = property;
-    let newOrder = "desc";
+    setOrder(newOrder)
+    setOrderBy(newOrderBy)
+  }
 
-    if (orderBy === property && order === "desc") {
-      newOrder = "asc";
-    }
+  const handleFilterChange = (filterName) => (event) => {
+    const val = event.target.value
 
-    setOrder(newOrder);
-    setOrderBy(newOrderBy);
-  };
-
-  const handleFilterChange = filterName => event => {
-    const val = event.target.value;
-
-    setFilterState(oldFilterState => ({
+    setFilterState((oldFilterState) => ({
       ...oldFilterState,
-      [filterName]: val
-    }));
-  };
+      [filterName]: val,
+    }))
+  }
 
   return (
     <Paper className={classes.root}>
@@ -103,12 +103,12 @@ function UserList(props) {
         label="User Name Contains"
         className={classes.textField}
         value={filterState.usernameFilter}
-        onChange={handleFilterChange("usernameFilter")}
+        onChange={handleFilterChange('usernameFilter')}
         margin="normal"
         variant="outlined"
         type="text"
         InputProps={{
-          className: classes.input
+          className: classes.input,
         }}
       />
       {loading && !error && <p>Loading...</p>}
@@ -119,13 +119,13 @@ function UserList(props) {
             <TableRow>
               <TableCell
                 key="name"
-                sortDirection={orderBy === "name" ? order : false}
+                sortDirection={orderBy === 'name' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === "name"}
+                    active={orderBy === 'name'}
                     direction={order}
-                    onClick={() => handleSortRequest("name")}
+                    onClick={() => handleSortRequest('name')}
                   >
                     Name
                   </TableSortLabel>
@@ -133,13 +133,13 @@ function UserList(props) {
               </TableCell>
               <TableCell
                 key="avgStars"
-                sortDirection={orderBy === "avgStars" ? order : false}
+                sortDirection={orderBy === 'avgStars' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === "avgStars"}
+                    active={orderBy === 'avgStars'}
                     direction={order}
-                    onClick={() => handleSortRequest("avgStars")}
+                    onClick={() => handleSortRequest('avgStars')}
                   >
                     Average Stars
                   </TableSortLabel>
@@ -147,13 +147,13 @@ function UserList(props) {
               </TableCell>
               <TableCell
                 key="numReviews"
-                sortDirection={orderBy === "numReviews" ? order : false}
+                sortDirection={orderBy === 'numReviews' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === "numReviews"}
+                    active={orderBy === 'numReviews'}
                     direction={order}
-                    onClick={() => handleSortRequest("numReviews")}
+                    onClick={() => handleSortRequest('numReviews')}
                   >
                     Number of Reviews
                   </TableSortLabel>
@@ -162,24 +162,24 @@ function UserList(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.User.map(n => {
+            {data.User.map((n) => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">
                     {n.name}
                   </TableCell>
                   <TableCell>
-                    {n.avgStars ? n.avgStars.toFixed(2) : "-"}
+                    {n.avgStars ? n.avgStars.toFixed(2) : '-'}
                   </TableCell>
                   <TableCell>{n.numReviews}</TableCell>
                 </TableRow>
-              );
+              )
             })}
           </TableBody>
         </Table>
       )}
     </Paper>
-  );
+  )
 }
 
-export default withStyles(styles)(UserList);
+export default withStyles(styles)(UserList)

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
-import { withRouter } from "react-router";
-import { withStyles } from "@material-ui/core/styles";
+import React, { Component } from 'react'
+import { Switch, Route, Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import { withStyles } from '@material-ui/core/styles'
 
 import {
   AppBar,
@@ -13,110 +13,110 @@ import {
   Divider,
   ListItem,
   ListItemIcon,
-  ListItemText
-} from "@material-ui/core";
+  ListItemText,
+} from '@material-ui/core'
 
 import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   Dashboard as DashboardIcon,
   EventNote as EventNoteIcon,
-  People as PeopleIcon
-} from "@material-ui/icons";
+  People as PeopleIcon,
+} from '@material-ui/icons'
 
-import UserList from "./UserList";
-import classNames from "classnames";
-import "./App.css";
+import UserList from './UserList'
+import classNames from 'classnames'
+import './App.css'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    display: "flex"
+    display: 'flex',
   },
   toolbar: {
-    paddingRight: 24
+    paddingRight: 24,
   },
   toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: "#383838"
+    backgroundColor: '#383838',
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 36
+    marginRight: 36,
   },
   menuButtonHidden: {
-    display: "none"
+    display: 'none',
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
+    position: 'relative',
+    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9)
-    }
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9),
+    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    height: "100vh",
-    overflow: "auto"
-  }
-});
+    height: '100vh',
+    overflow: 'auto',
+  },
+})
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      open: true
-    };
+      open: true,
+    }
   }
 
   handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
+    this.setState({ open: true })
+  }
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
+    this.setState({ open: false })
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <React.Fragment>
@@ -161,7 +161,7 @@ class App extends Component {
               paper: classNames(
                 classes.drawerPaper,
                 !this.state.open && classes.drawerPaperClose
-              )
+              ),
             }}
             open={this.state.open}
           >
@@ -207,10 +207,10 @@ class App extends Component {
           </main>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
-const Business = () => <div></div>;
+const Business = () => <div></div>
 
-export default withRouter(withStyles(styles)(App));
+export default withRouter(withStyles(styles)(App))

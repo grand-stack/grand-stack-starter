@@ -1,38 +1,38 @@
-const path = require("path");
-const concurrently = require("concurrently");
-const execa = require("execa");
+const path = require('path')
+const concurrently = require('concurrently')
+const execa = require('execa')
 
-const API_DIR = path.join(__dirname, "api");
-const WEB_DIR = path.join(__dirname, "ui-react");
+const API_DIR = path.join(__dirname, 'api')
+const WEB_DIR = path.join(__dirname, 'ui-react')
 
 const shouldUseYarn = () => {
   try {
-    execa.sync("yarnpkg", ["--version"]);
-    return true;
+    execa.sync('yarnpkg', ['--version'])
+    return true
   } catch (e) {
-    return false;
+    return false
   }
-};
+}
 
-const runner = shouldUseYarn() ? "yarn" : "npm";
+const runner = shouldUseYarn() ? 'yarn' : 'npm'
 
 const jobs = [
   {
-    name: "api",
+    name: 'api',
     command: `cd ${API_DIR} && ${runner} run start:dev`,
-    prefixColor: "green",
+    prefixColor: 'green',
   },
   {
-    name: "ui-react",
+    name: 'ui-react',
     command: `cd ${WEB_DIR} && ${runner} run start`,
-    prefixColor: "blue",
+    prefixColor: 'blue',
   },
-];
+]
 
 concurrently(jobs, {
   restartTries: 3,
-  prefix: "{time} {name} |",
-  timestampFormat: "HH:mm:ss",
+  prefix: '{time} {name} |',
+  timestampFormat: 'HH:mm:ss',
 }).catch((e) => {
-  console.log(c.error(e.message));
-});
+  console.log(c.error(e.message))
+})

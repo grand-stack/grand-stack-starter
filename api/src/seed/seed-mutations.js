@@ -241,7 +241,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r1: CreateReview(id: "r1", stars: 4, text: "Great IPA selection!", date: { formatted: "2016-01-03"}) {
+    r1: CreateReview(
+      id: "r1"
+      stars: 4
+      text: "Great IPA selection!"
+      date: { formatted: "2016-01-03" }
+    ) {
       id
     }
     ar1: AddUserReviews(from: { id: "u1" }, to: { id: "r1" }) {
@@ -255,7 +260,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r2: CreateReview(id: "r2", stars: 5, text: "", date: { formatted: "2016-07-14"}) {
+    r2: CreateReview(
+      id: "r2"
+      stars: 5
+      text: ""
+      date: { formatted: "2016-07-14" }
+    ) {
       id
     }
     ar2: AddUserReviews(from: { id: "u3" }, to: { id: "r2" }) {
@@ -269,7 +279,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r3: CreateReview(id: "r3", stars: 3, text: "", date: { formatted: "2018-09-10"}) {
+    r3: CreateReview(
+      id: "r3"
+      stars: 3
+      text: ""
+      date: { formatted: "2018-09-10" }
+    ) {
       id
     }
     ar3: AddUserReviews(from: { id: "u4" }, to: { id: "r3" }) {
@@ -283,7 +298,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r4: CreateReview(id: "r4", stars: 5, text: "", date: { formatted: "2017-11-13"}) {
+    r4: CreateReview(
+      id: "r4"
+      stars: 5
+      text: ""
+      date: { formatted: "2017-11-13" }
+    ) {
       id
     }
     ar4: AddUserReviews(from: { id: "u3" }, to: { id: "r4" }) {
@@ -301,7 +321,7 @@ export default /* GraphQL */ `
       id: "r5"
       stars: 4
       text: "Best breakfast sandwich at the Farmer's Market. Always get the works."
-      date: { formatted: "2018-01-03"}
+      date: { formatted: "2018-01-03" }
     ) {
       id
     }
@@ -316,7 +336,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r6: CreateReview(id: "r6", stars: 4, text: "", date: { formatted: "2018-03-24"}) {
+    r6: CreateReview(
+      id: "r6"
+      stars: 4
+      text: ""
+      date: { formatted: "2018-03-24" }
+    ) {
       id
     }
     ar6: AddUserReviews(from: { id: "u2" }, to: { id: "r6" }) {
@@ -334,7 +359,7 @@ export default /* GraphQL */ `
       id: "r7"
       stars: 3
       text: "Not a great selection of books, but fortunately the inter-library loan system is good. Wifi is quite slow. Not many comfortable places to site and read. Looking forward to the new building across the street in 2020!"
-      date: { formatted: "2015-08-29"}
+      date: { formatted: "2015-08-29" }
     ) {
       id
     }
@@ -349,7 +374,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r8: CreateReview(id: "r8", stars: 5, text: "", date: { formatted: "2018-08-11"}) {
+    r8: CreateReview(
+      id: "r8"
+      stars: 5
+      text: ""
+      date: { formatted: "2018-08-11" }
+    ) {
       id
     }
     ar8: AddUserReviews(from: { id: "u4" }, to: { id: "r8" }) {
@@ -363,7 +393,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r9: CreateReview(id: "r9", stars: 5, text: "", date: { formatted: "2016-11-21"}) {
+    r9: CreateReview(
+      id: "r9"
+      stars: 5
+      text: ""
+      date: { formatted: "2016-11-21" }
+    ) {
       id
     }
     ar9: AddUserReviews(from: { id: "u3" }, to: { id: "r9" }) {
@@ -377,7 +412,12 @@ export default /* GraphQL */ `
       }
     }
 
-    r10: CreateReview(id: "r10", stars: 4, text: "", date: { formatted: "2015-12-15"}) {
+    r10: CreateReview(
+      id: "r10"
+      stars: 4
+      text: ""
+      date: { formatted: "2015-12-15" }
+    ) {
       id
     }
     ar10: AddUserReviews(from: { id: "u2" }, to: { id: "r10" }) {
@@ -391,4 +431,4 @@ export default /* GraphQL */ `
       }
     }
   }
-`;
+`

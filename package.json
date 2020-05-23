@@ -15,7 +15,8 @@
   "scripts": {
     "start": "node start-dev.js",
     "build": "node build.js",
-    "format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx}\""
+    "format": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier --write",
+    "format:log": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier"
   },
   "husky": {
     "hooks": {
@@ -23,6 +24,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": ["prettier --write", "eslint --cache --fix"]
   }
 }

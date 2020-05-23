@@ -1,11 +1,11 @@
-const proxy = require("http-proxy-middleware");
+const proxy = require('http-proxy-middleware')
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
-    "/graphql",
+    '/graphql',
     proxy({
       target: `${process.env.PROXY}`,
-      changeOrigin: true
+      changeOrigin: true,
     })
-  );
-};
+  )
+}
