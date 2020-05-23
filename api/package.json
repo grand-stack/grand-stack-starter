@@ -19,6 +19,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "apollo-server": "^2.13.1",
+    "apollo-server-lambda": "^2.13.1",
     "dotenv": "^7.0.0",
     "graphql-tag": "^2.10.1",
     "neo4j-driver": "^4.0.2",
