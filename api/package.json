@@ -49,7 +49,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md,graphql": [
+    "*.{js,json,css,md,graphql}": [
       "prettier --write",
       "git add"
     ]
