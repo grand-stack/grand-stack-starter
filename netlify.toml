@@ -1,0 +1,7 @@
+[build]
+  command = "yarn run build"
+  publish = "ui-react/build"
+  functions = "api/build/functions"
+
+[dev]
+  command = "yarn start"

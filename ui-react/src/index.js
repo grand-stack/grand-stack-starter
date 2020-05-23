@@ -8,7 +8,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { BrowserRouter } from "react-router-dom";
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI
+  uri: process.env.REACT_APP_GRAPHQL_URI || "/graphql"
 });
 
 const Main = () => (
