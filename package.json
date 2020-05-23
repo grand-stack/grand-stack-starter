@@ -26,8 +26,7 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
-      "eslint --cache --fix",
-      "git add"
+      "eslint --fix"
     ]
   }
 }
