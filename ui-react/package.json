@@ -10,7 +10,6 @@
     "classnames": "^2.2.6",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
-    "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.1.2",
@@ -25,20 +24,7 @@
     "now-build": "react-scripts build"
   },
   "devDependencies": {
-    "http-proxy-middleware": "^0.20.0",
-    "husky": "^2.7.0",
-    "lint-staged": "^8.2.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,css,md,graphql}": [
-      "prettier --write",
-      "git add"
-    ]
+    "http-proxy-middleware": "^0.20.0"
   },
   "browserslist": [
     ">0.2%",
