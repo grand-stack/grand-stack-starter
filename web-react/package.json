@@ -1,7 +1,7 @@
 {
   "name": "grand-stack-starter-web-react",
   "version": "0.0.1",
-  "description": "UI app for GRANDstack",
+  "description": "React app for GRANDstack Starter",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@material-ui/core": "^4.2.1",
