@@ -20,8 +20,13 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "plugins": ["react", "prettier", "only-warn"],
   "rules": {
     "prettier/prettier": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "16.9"
+    }
   }
 }
