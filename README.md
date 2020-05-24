@@ -1,38 +1,65 @@
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/grand-stack/grand-stack-starter&env=NEO4J_USER&env=NEO4J_URI&env=NEO4J_PASSWORD)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/grand-stack/grand-stack-starter) [![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/grand-stack/grand-stack-starter&env=NEO4J_USER&env=NEO4J_URI&env=NEO4J_PASSWORD)
 
 # GRANDstack Starter
 
 This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (in React and Angular flavors) and the API app (GraphQL server).
 
-[![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=rPC71lUhK_I "Hands On With The GRANDstack Starter")
+_Hands On With The GRANDstack Starter Video_
+[![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=rPC71lUhK_I 'Hands On With The GRANDstack Starter')
 
 ## Quickstart
 
-### Neo4j
+The easiest way to get started with the GRANDstack Starter is to create a Neo4j Sandbox instance and use the `create-grandstack-app` command line tool.
 
-You need a Neo4j instance, e.g. a [Neo4j Sandbox](http://neo4j.com/sandbox), a local instance via [Neo4j Desktop](https://neo4j.com/download), [Docker](http://hub.docker.com/_/neo4j) or a [Neo4j instance on AWS, Azure or GCP](http://neo4j.com/developer/guide-cloud-deployment) or [Neo4j Cloud](http://neo4j.com/cloud)
+1. Create A Neo4j Sandbox Instance
 
-For schemas using the  `@cypher` directive (as in this repo) via [`neo4j-graphql-js`](https://github.com/neo4j-graphql/neo4j-graphql-js), you need to have the [APOC library](https://github.com/neo4j-contrib/neo4j-apoc-procedures) installed, which should be automatic in Sandbox, Cloud and is a single click install in Neo4j Desktop. If when using the Sandbox / cloud you encounter an issue where an error similar to `Can not be converted to long: org.neo4j.kernel.impl.core.NodeProxy, Location: [object Object], Path: users` appears in the console when running the React app, try installing and using Neo4j locally instead.
+Neo4j Sandbox allows you to create a free hosted Neo4j instance private to you that can be used for development.
 
-#### Sandbox setup
-A good tutorial can be found here: https://www.youtube.com/watch?v=rPC71lUhK_I
+After singing in to Neo4j Sandbox, click the `+ New Project` button and select the "Blank Sandbox" option. In the next step we'll use the connection credentials from the "Connection details" tab to connect our GraphQL API to this Neo4j instance.
 
-#### Local setup
-1. [Download Neo4j Desktop](https://neo4j.com/download/)
-2. Install and open Neo4j Desktop.
-3. Create a new DB by clicking "New Graph", and clicking "create local graph".
-4. Set password to "letmein" (as suggested by `api/.env`), and click "Create".
-5. Make sure that the default credentials in `api/.env` are used. Leave them as follows: `NEO4J_URI=bolt://localhost:7687 NEO4J_USER=neo4j NEO4J_PASSWORD=letmein`
-6. Click "Manage".
-7. Click "Plugins".
-8. Find "APOC" and click "Install".
-9. Click the "play" button at the top of left the screen, which should start the server. _(screenshot 2)_
-10. Wait until it says "RUNNING".
-11. Proceed forward with the rest of the tutorial.
+![Neo4j Sandbox connection details](img/neo4j-sandbox.png)
+
+2. Run the `create-grandstack-app` CLI
+
+```
+npx create-grandstack-app myNewApp
+```
+
+or with Yarn
+
+```
+yarn create grandstack-app myNewApp
+```
+
+![create grandstack app output](img/create-grandstack-app.png)
+
+This will create a new directory `myNewApp`, download the latest release of the GRANDstack Starter, install dependencies and prompt for your connection credentials for Neo4j to connect to the GraphQL API.
+
+3. Seed the database (optional)
+
+Once the application is running, in another terminal run
+
+```
+npm run seedDb
+```
+
+or with Yarn
+
+```
+yarn run seedDb
+```
+
+4. Open In Browser
+
+![Grandstack app running in browser](img/grandstack-app.png)
+
+## Overview
+
+The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular.
 
 ### [`/api`](./api)
 
-*Install dependencies*
+_Install dependencies_
 
 ```
 (cd ./ui-react && npm install)
@@ -40,7 +67,8 @@ A good tutorial can be found here: https://www.youtube.com/watch?v=rPC71lUhK_I
 (cd ./api && npm install)
 ```
 
-*Start API server*
+_Start API server_
+
 ```
 cd ./api && npm start
 ```
@@ -51,7 +79,8 @@ cd ./api && npm start
 
 This will start the GraphQL API in the foreground, so in another terminal session start the React UI development server:
 
-*Start the React UI server*
+_Start the React UI server_
+
 ```
 cd ./ui-react && npm start
 ```
@@ -62,7 +91,8 @@ cd ./ui-react && npm start
 
 A UI built with [Angular](https://angular.io), [Apollo](https://www.apollographql.com/docs/angular/) and the [Clarity Design System](https://clarity.design) is also available.
 
-*Start the Angular UI server*
+_Start the Angular UI server_
+
 ```
 cd ./ui-angular && npm start
 ```
@@ -73,38 +103,35 @@ See [the project releases](https://github.com/grand-stack/grand-stack-starter/re
 
 ## Deployment
 
-### Zeit Now v2
+### Netlify
+
+### Vercel
 
 Zeit Now v2 can be used with monorepos such as grand-stack-starter. [`now.json`](https://github.com/grand-stack/grand-stack-starter/blob/master/now.json) defines the configuration for deploying with Zeit Now v2.
 
 1. Set the now secrets for your Neo4j instance:
 
 ```
-now secret add NEO4J_URI bolt+routing://<YOUR_NEO4J_INSTANCE_HERE>
-now secret add NEO4J_USER <YOUR_DATABASE_USERNAME_HERE>
-now secret add NEO4J_PASSWORD <YOUR_DATABASE_USER_PASSWORD_HERE>
+now secret add grand_stack_starter_neo4j_uri bolt://<YOUR_NEO4J_INSTANCE_HERE>
+now secret add grand_stack_starter_neo4j_user <YOUR_DATABASE_USERNAME_HERE>
+now secret add grand_stack_starter_neo4j_password <YOUR_DATABASE_USER_PASSWORD_HERE>
 ```
 
 2. Run `now`
 
-### Zeit Now v1
-
-1. Run `now` in `/api` and choose `package.json` when prompted.
-1. Set `REACT_APP_GRAPHQL_API` based on the API deployment URL from step 1 in `ui-react/.env`
-1. Run `now` in `/env` and choose `package.json` when prompted.
-
 ## Docker Compose
 
 You can quickly start via:
+
 ```
 docker-compose up -d
 ```
 
 If you want to load the example DB after the services have been started:
+
 ```
 docker-compose run api npm run seedDb
 ```
 
-
 This project is licensed under the Apache License v2.
-Copyright (c) 2018 Neo4j, Inc.
+Copyright (c) 2020 Neo4j, Inc.
