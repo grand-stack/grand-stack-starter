@@ -34,5 +34,5 @@ concurrently(jobs, {
   prefix: '{time} {name} |',
   timestampFormat: 'HH:mm:ss',
 }).catch((e) => {
-  console.log(c.error(e.message))
+  console.error(e.message)
 })

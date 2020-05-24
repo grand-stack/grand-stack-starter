@@ -33,6 +33,6 @@ concurrently(jobs, {
   restartTries: 3,
   prefix: '{time} {name} |',
   timestampFormat: 'HH:mm:ss',
-}).catch(e => {
-  console.log(c.error(e.message))
+}).catch((e) => {
+  console.error(e.message)
 })
