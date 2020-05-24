@@ -1,10 +1,9 @@
 import ApolloClient from 'apollo-client'
-import gql from 'graphql-tag'
 import dotenv from 'dotenv'
-import seedmutations from './seed-mutations'
 import fetch from 'node-fetch'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { getSeedMutations } from './seed-mutations'
 
 dotenv.config()
 
@@ -21,14 +20,25 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-client
-  .mutate({
-    mutation: gql(seedmutations),
+const runMutations = async () => {
+  const mutations = await getSeedMutations()
+
+  return Promise.all(
+    mutations.map(({ mutation, variables }) => {
+      return client
+        .mutate({
+          mutation,
+          variables,
+        })
+        .catch((e) => {
+          throw new Error(e)
+        })
+    })
+  )
+}
+
+runMutations()
+  .then(() => {
+    console.log('Database seeded!')
   })
-  .then((data) => {
-    console.log(data)
-    console.log(
-      `Database seeded! You can now query your GraphQL API at ${uri} `
-    )
-  })
-  .catch((error) => console.error(error))
+  .catch((e) => console.error(e))
