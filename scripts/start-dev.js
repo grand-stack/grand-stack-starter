@@ -2,8 +2,8 @@ const path = require('path')
 const concurrently = require('concurrently')
 const execa = require('execa')
 
-const API_DIR = path.join(__dirname, 'api')
-const WEB_DIR = path.join(__dirname, 'ui-react')
+const API_DIR = path.join(__dirname, '../api')
+const WEB_DIR = path.join(__dirname, '../web-react')
 
 const shouldUseYarn = () => {
   try {
@@ -23,7 +23,7 @@ const jobs = [
     prefixColor: 'green',
   },
   {
-    name: 'ui-react',
+    name: 'web-react',
     command: `cd ${WEB_DIR} && ${runner} run start`,
     prefixColor: 'blue',
   },

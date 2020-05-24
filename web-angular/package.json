@@ -1,5 +1,5 @@
 {
-  "name": "grandstack-starter-ui-angular",
+  "name": "grandstack-starter-web-angular",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",

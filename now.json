@@ -3,9 +3,9 @@
   "builds": [
     { "src": "api/src/index.js", "use": "@now/node" },
     {
-      "src": "ui-react/package.json",
+      "src": "web-react/package.json",
       "use": "@now/static-build",
-      "config": {"distDir": "build"}
+      "config": { "distDir": "build" }
     }
   ],
   "routes": [
@@ -13,22 +13,25 @@
     {
       "src": "/static/(.*)",
       "headers": { "cache-control": "s-maxage=31536000,immutable" },
-      "dest": "ui-react/static/$1"
+      "dest": "web-react/static/$1"
     },
-    { "src": "/favicon.ico", "dest": "ui-react/favicon.ico" },
-    { "src": "/img/(.*)", "dest": "ui-react/img/$1"},
-    { "src": "/asset-manifest.json", "dest": "ui-react/asset-manifest.json" },
-    { "src": "/manifest.json", "dest": "ui-react/manifest.json" },
-    { "src": "/precache-manifest.(.*)", "dest": "ui-react/precache-manifest.$1" },
+    { "src": "/favicon.ico", "dest": "web-react/favicon.ico" },
+    { "src": "/img/(.*)", "dest": "web-react/img/$1" },
+    { "src": "/asset-manifest.json", "dest": "web-react/asset-manifest.json" },
+    { "src": "/manifest.json", "dest": "web-react/manifest.json" },
+    {
+      "src": "/precache-manifest.(.*)",
+      "dest": "web-react/precache-manifest.$1"
+    },
     {
       "src": "/service-worker.js",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "ui-react/service-worker.js"
+      "dest": "web-react/service-worker.js"
     },
     {
       "src": "^(.*)$",
       "headers": { "cache-control": "s-maxage=0" },
-      "dest": "/ui-react/index.html"
+      "dest": "/web-react/index.html"
     }
   ],
   "build": {

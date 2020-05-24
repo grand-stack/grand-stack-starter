@@ -63,8 +63,8 @@ The GRANDstack Starter is a monorepo that includes a GraphQL API application and
 _Install dependencies_
 
 ```
-(cd ./ui-react && npm install)
-(cd ./ui-angular && npm install)
+(cd ./web-react && npm install)
+(cd ./web-angular && npm install)
 (cd ./api && npm install)
 ```
 
@@ -76,29 +76,29 @@ cd ./api && npm start
 
 ![](api/img/graphql-playground.png)
 
-### [`/ui-react`](./ui-react)
+### [`/web-react`](./web-react)
 
 This will start the GraphQL API in the foreground, so in another terminal session start the React UI development server:
 
 _Start the React UI server_
 
 ```
-cd ./ui-react && npm start
+cd ./web-react && npm start
 ```
 
-![](ui-react/img/default-app.png)
+![](web-react/img/default-app.png)
 
-### [`/ui-angular`](./ui-angular)
+### [`/web-angular`](./web-angular)
 
 A UI built with [Angular](https://angular.io), [Apollo](https://www.apollographql.com/docs/angular/) and the [Clarity Design System](https://clarity.design) is also available.
 
 _Start the Angular UI server_
 
 ```
-cd ./ui-angular && npm start
+cd ./web-angular && npm start
 ```
 
-![](ui-angular/img/angular-ui.jpg)
+![](web-angular/img/angular-ui.jpg)
 
 See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
 

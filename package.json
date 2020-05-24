@@ -13,8 +13,8 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
-    "start": "node start-dev.js",
-    "build": "node build.js",
+    "start": "node scripts/start-dev.js",
+    "build": "node scripts/build.js",
     "format": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier --write",
     "format:log": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier"
   },
