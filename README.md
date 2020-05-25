@@ -169,5 +169,8 @@ If you want to load the example DB after the services have been started:
 docker-compose run api npm run seedDb
 ```
 
+
+You can find instructions for other ways to use Neo4j (Neo4j Desktop, Neo4j Aura, and other cloud services) in the [Neo4j directory README.](./neo4j)
+
 This project is licensed under the Apache License v2.
 Copyright (c) 2020 Neo4j, Inc.
