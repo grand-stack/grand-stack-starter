@@ -1,7 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import './UserList.css'
 import { withStyles } from '@material-ui/core/styles'
 import {
   Table,
@@ -12,9 +11,10 @@ import {
   Tooltip,
   Paper,
   TableSortLabel,
-  Typography,
   TextField,
 } from '@material-ui/core'
+
+import Title from './Title'
 
 const styles = (theme) => ({
   root: {
@@ -41,7 +41,7 @@ const GET_USER = gql`
     $filter: _UserFilter
   ) {
     User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
-      id
+      id: userId
       name
       avgStars
       numReviews
@@ -53,8 +53,8 @@ function UserList(props) {
   const { classes } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
-  const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+  const [page] = React.useState(0)
+  const [rowsPerPage] = React.useState(10)
   const [filterState, setFilterState] = React.useState({ usernameFilter: '' })
 
   const getFilter = () => {
@@ -95,9 +95,7 @@ function UserList(props) {
 
   return (
     <Paper className={classes.root}>
-      <Typography variant="h2" gutterBottom>
-        User List
-      </Typography>
+      <Title>User List</Title>
       <TextField
         id="search"
         label="User Name Contains"

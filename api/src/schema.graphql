@@ -49,3 +49,15 @@ type Mutation {
       statement: "MATCH (b:Business {businessId: $businessId}) UNWIND $categories AS cat MERGE (c:Category {name: cat}) MERGE (b)-[:IN_CATEGORY]->(c) RETURN b"
     )
 }
+type RatingCount {
+  stars: Float!
+  count: Int!
+}
+
+type Query {
+  userCount: Int! @cypher(statement: "MATCH (u:User) RETURN COUNT(u)")
+  ratingsCount: [RatingCount]
+    @cypher(
+      statement: "MATCH (r:Review) WITH r.stars AS stars, COUNT(*) AS count RETURN {stars: stars, count: count}"
+    )
+}

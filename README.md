@@ -2,7 +2,11 @@
 
 # GRANDstack Starter
 
-This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the UI application (in React and Angular flavors) and the API app (GraphQL server).
+```
+npx create-grandstack-app myNewApp
+```
+
+This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the web frontend application (in React and Angular flavors) and the API app (GraphQL server).
 
 [![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=rPC71lUhK_I 'Hands On With The GRANDstack Starter')
 
@@ -12,15 +16,15 @@ _Hands On With The GRANDstack Starter Video_
 
 The easiest way to get started with the GRANDstack Starter is to create a Neo4j Sandbox instance and use the `create-grandstack-app` command line tool.
 
-1. Create A Neo4j Sandbox Instance
+### 1. Create A Neo4j Sandbox Instance
 
-Neo4j Sandbox allows you to create a free hosted Neo4j instance private to you that can be used for development.
+[Neo4j Sandbox](https://neo4j.com/sandbox) allows you to create a free hosted Neo4j instance private to you that can be used for development.
 
 After singing in to Neo4j Sandbox, click the `+ New Project` button and select the "Blank Sandbox" option. In the next step we'll use the connection credentials from the "Connection details" tab to connect our GraphQL API to this Neo4j instance.
 
 ![Neo4j Sandbox connection details](img/neo4j-sandbox.png)
 
-2. Run the `create-grandstack-app` CLI
+### 2. Run the `create-grandstack-app` CLI
 
 ```
 npx create-grandstack-app myNewApp
@@ -36,7 +40,7 @@ yarn create grandstack-app myNewApp
 
 This will create a new directory `myNewApp`, download the latest release of the GRANDstack Starter, install dependencies and prompt for your connection credentials for Neo4j to connect to the GraphQL API.
 
-3. Seed the database (optional)
+### 3. Seed the database (optional)
 
 Once the application is running, in another terminal run
 
@@ -50,7 +54,7 @@ or with Yarn
 yarn run seedDb
 ```
 
-4. Open In Browser
+### 4. Open In Browser
 
 ![Grandstack app running in browser](img/grandstack-app.png)
 
@@ -58,37 +62,60 @@ yarn run seedDb
 
 The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular.
 
+### `/` - Project Root
+
+The root directory contains some global configuration and scripts:
+
+- `npm run start` and `npm run build`
+- ESLint (.eslintrc.json) for code linting
+- Prettier (.prettierrc.json) for code formatting
+- Git hooks for applying formatting on commit
+
 ### [`/api`](./api)
 
-_Install dependencies_
+![](img/graphql-playground.png)
+
+This directory contains the GraphQL API application using Apollo Server and neo4j-graphql.js.
+
+- Change environment variable settings in `.env`:
 
 ```
-(cd ./web-react && npm install)
-(cd ./web-angular && npm install)
-(cd ./api && npm install)
-```
+# Use this file to set environment variables with credentials and configuration options
+# This file is provided as an example and should be replaced with your own values
+# You probably don't want to check this into version control!
 
-_Start API server_
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=letmein
+
+# Uncomment this line to enable encrypted driver connection for Neo4j
+#NEO4J_ENCRYPTED=true
+
+# Uncomment this line to specify a specific Neo4j database (v4.x+ only)
+#NEO4J_DATABASE=neo4j
+
+GRAPHQL_SERVER_HOST=0.0.0.0
+GRAPHQL_SERVER_PORT=4001
+GRAPHQL_SERVER_PATH=/graphql
 
 ```
-cd ./api && npm start
-```
-
-![](api/img/graphql-playground.png)
 
 ### [`/web-react`](./web-react)
 
-This will start the GraphQL API in the foreground, so in another terminal session start the React UI development server:
+![](img/grandstack-app.png)
 
-_Start the React UI server_
+The frontend React web application is found in this directory.
 
-```
-cd ./web-react && npm start
-```
+It includes:
 
-![](web-react/img/default-app.png)
+- Material UI
+- React router
+- Apollo Client / React Hooks
+- Create React App
 
 ### [`/web-angular`](./web-angular)
+
+![](web-angular/img/angular-ui.jpg)
 
 A UI built with [Angular](https://angular.io), [Apollo](https://www.apollographql.com/docs/angular/) and the [Clarity Design System](https://clarity.design) is also available.
 
@@ -98,15 +125,23 @@ _Start the Angular UI server_
 cd ./web-angular && npm start
 ```
 
-![](web-angular/img/angular-ui.jpg)
-
 See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
 
 ## Deployment
 
 ### Netlify
 
-### Vercel
+This monorepo can be deployed to Netlify. The frontend application will be served over Netlify's CDN and the GraphQL API will be provisioned as a serverless GraphQL API lambda function deployed to AWS (via Netlify). A netlify.toml file is included with the necessary build configurations. The following environment variables must be set in Netlify (either via the Netlify web UI or via the command line tool)
+
+```
+NEO4J_URI
+NEO4J_USER
+NEO4J_PASSWORD
+```
+
+See the "Hands On With The GRANDStack Starter" video linked at the beginning of this README for a walkthrough of deploying to Netlify.
+
+### Vercel / Zeit Now
 
 Zeit Now v2 can be used with monorepos such as grand-stack-starter. [`now.json`](https://github.com/grand-stack/grand-stack-starter/blob/master/now.json) defines the configuration for deploying with Zeit Now v2.
 
