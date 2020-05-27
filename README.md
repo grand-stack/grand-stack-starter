@@ -1,4 +1,5 @@
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/grand-stack/grand-stack-starter) [![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/grand-stack/grand-stack-starter&env=NEO4J_USER&env=NEO4J_URI&env=NEO4J_PASSWORD)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://grandstack.io/deploy-to-netlify) [![Deploy to Vercel](https://vercel.com/button)](https://grandstack.io/deploy-to-vercel)
+
 
 # GRANDstack Starter
 
