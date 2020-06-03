@@ -63,11 +63,8 @@ const init = async (driver) => {
  * In this case, ensure that any desired initialization steps
  * have occurred
  */
-try {
-  init(driver)
-} catch (error) {
-  console.error(`Failed to property initialize database`, error)
-}
+
+init(driver)
 
 /*
  * Create a new ApolloServer instance, serving the GraphQL schema

@@ -9,5 +9,7 @@ export const initializeDatabase = (driver) => {
       .finally(() => session.close())
   }
 
-  executeQuery(driver).catch((error) => console.error(error))
+  executeQuery(driver).catch((error) => {
+    console.error('Database initialization failed to complete\n', error.message)
+  })
 }
