@@ -6,7 +6,8 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
     "execa": "^4.0.2",
-    "grandstack": "^0.0.6",
+    "grandstack": "^0.0.7",
+    "dotenv": "^8.2.0",
     "husky": ">=4",
     "lint-staged": ">=10",
     "prettier": "^2.0.5",
@@ -16,7 +17,8 @@
     "start": "node scripts/start-dev.js",
     "build": "node scripts/build.js",
     "format": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier --write",
-    "format:log": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier"
+    "format:log": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier",
+    "inferschema:write": "node scripts/inferSchema.js"
   },
   "husky": {
     "hooks": {
