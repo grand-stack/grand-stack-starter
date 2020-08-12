@@ -8,6 +8,8 @@ npx create-grandstack-app myNewApp
 
 This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the web frontend application (in React and Angular flavors) and the API app (GraphQL server).
 
+The starter represents a **business reviews dashboard**. You need to adjust the GraphQL schema, the seed data, database index creation, and the UI components for your use-case.
+
 [![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=1JLs166lPcA 'Hands On With The GRANDstack Starter')
 
 _Hands On With The GRANDstack Starter Video_
@@ -15,6 +17,8 @@ _Hands On With The GRANDstack Starter Video_
 ## Quickstart
 
 The easiest way to get started with the GRANDstack Starter is to create a Neo4j Sandbox instance and use the `create-grandstack-app` command line tool.
+
+(If you have a running Neo4j database on localhost via Neo4j Desktop or a Neo4j server installation, change the password in `api/.env`)
 
 ### 1. Create A Neo4j Sandbox Instance
 
@@ -60,7 +64,7 @@ yarn run seedDb
 
 ## Overview
 
-The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular.
+The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular for a business reviews dashboard.
 
 ### `/` - Project Root
 
