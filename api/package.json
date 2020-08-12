@@ -18,7 +18,7 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.13.1",
+    "apollo-server": "^2.14.2",
     "apollo-server-lambda": "^2.13.1",
     "csv-parse": "^4.10.1",
     "dotenv": "^7.0.0",
