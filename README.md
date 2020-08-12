@@ -1,6 +1,5 @@
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://grandstack.io/deploy-starter-netlify) [![Deploy to Vercel](https://vercel.com/button)](https://grandstack.io/deploy-starter-vercel) [![Provision Neo4j](https://grandstack.io/img/provision-neo4j.png)](https://sandbox.neo4j.com/?usecase=blank-sandbox)
 
-
 # GRANDstack Starter
 
 ```
@@ -43,7 +42,7 @@ This will create a new directory `myNewApp`, download the latest release of the 
 
 ### 3. Seed the database (optional)
 
-Once the application is running, in another terminal run
+Make sure your application is running locally with `npm start` or `yarn start`, open another terminal and run
 
 ```
 npm run seedDb
@@ -169,7 +168,6 @@ If you want to load the example DB after the services have been started:
 ```
 docker-compose run api npm run seedDb
 ```
-
 
 You can find instructions for other ways to use Neo4j (Neo4j Desktop, Neo4j Aura, and other cloud services) in the [Neo4j directory README.](./neo4j)
 

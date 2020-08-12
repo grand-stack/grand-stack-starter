@@ -14,6 +14,7 @@
     "prettier-eslint-cli": "^5.0.0"
   },
   "scripts": {
+    "seedDb": "node scripts/seed.js",
     "start": "node scripts/start-dev.js",
     "build": "node scripts/build.js",
     "format": "find . -name \"*.js\" | grep -v node_modules | grep -v build | xargs prettier --write",
