@@ -1,21 +1,35 @@
 require('dotenv').config({ path: './api/.env' })
 const execa = require('execa')
 const path = require('path')
-
-//console.log(process.env)
-
 const grandstackCmd = path.join('node_modules', '.bin', 'grandstack')
+const {
+  NEO4J_URI,
+  NEO4J_USER,
+  NEO4J_PASSWORD,
+  NEO4J_ENCRYPTED,
+  NEO4J_DATABASE,
+} = process.env
 
-// TODO: fix options for encrypted connection and database option
-execa.sync(grandstackCmd, [
+const grandstackCmdArgs = [
   'graphql',
   'inferschema',
   '--neo4j-uri',
-  `${process.env.NEO4J_URI}`,
+  `${NEO4J_URI}`,
   '--neo4j-user',
-  `${process.env.NEO4J_USER}`,
+  `${NEO4J_USER}`,
   `--neo4j-password`,
-  `${process.env.NEO4J_PASSWORD}`,
+  `${NEO4J_PASSWORD}`,
   `--schema-file`,
   `./api/src/schema.graphql`,
-])
+]
+
+if (NEO4J_ENCRYPTED) {
+  grandstackCmdArgs.push(`--encrypted`)
+}
+
+if (NEO4J_DATABASE) {
+  grandstackCmdArgs.push(`--database`)
+  grandstackCmdArgs.push(`${NEO4J_DATABASE}`)
+}
+
+execa.sync(grandstackCmd, grandstackCmdArgs)
