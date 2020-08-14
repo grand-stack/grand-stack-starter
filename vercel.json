@@ -1,10 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/src/index.js", "use": "@now/node" },
+    { "src": "api/src/index.js", "use": "@vercel/node" },
     {
       "src": "web-react/package.json",
-      "use": "@now/static-build",
+      "use": "@vercel/static-build",
       "config": { "distDir": "build" }
     }
   ],
