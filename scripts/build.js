@@ -1,20 +1,12 @@
-const path = require('path')
 const concurrently = require('concurrently')
-const execa = require('execa')
 
-const API_DIR = path.join(__dirname, '../api')
-const WEB_DIR = path.join(__dirname, '../web-react')
-
-const shouldUseYarn = () => {
-  try {
-    execa.sync('yarnpkg', ['--version'])
-    return true
-  } catch (e) {
-    return false
-  }
-}
-
-const runner = shouldUseYarn() ? 'yarn' : 'npm'
+const {
+  API_DIR,
+  WEB_DIR,
+  runner,
+  concurrentOpts,
+  templateName,
+} = require('./common')
 
 const jobs = [
   {
@@ -23,16 +15,12 @@ const jobs = [
     prefixColor: 'green',
   },
   {
-    name: 'web-react',
+    name: templateName,
     command: `cd ${WEB_DIR} && ${runner} run build`,
     prefixColor: 'blue',
   },
 ]
 
-concurrently(jobs, {
-  restartTries: 3,
-  prefix: '{time} {name} |',
-  timestampFormat: 'HH:mm:ss',
-}).catch((e) => {
+concurrently(jobs, concurrentOpts).catch((e) => {
   console.error(e.message)
 })

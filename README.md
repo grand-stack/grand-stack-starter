@@ -1,6 +1,5 @@
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://grandstack.io/deploy-starter-netlify) [![Deploy to Vercel](https://vercel.com/button)](https://grandstack.io/deploy-starter-vercel) [![Provision Neo4j](https://grandstack.io/img/provision-neo4j.png)](https://sandbox.neo4j.com/?usecase=blank-sandbox)
 
-
 # GRANDstack Starter
 
 ```
@@ -8,6 +7,8 @@ npx create-grandstack-app myNewApp
 ```
 
 This project is a starter for building a [GRANDstack](https://grandstack.io) (GraphQL, React, Apollo, Neo4j Database) application. There are two components to the starter, the web frontend application (in React and Angular flavors) and the API app (GraphQL server).
+
+The starter represents a **business reviews dashboard**. You need to adjust the GraphQL schema, the seed data, database index creation, and the UI components for your use-case.
 
 [![Hands On With The GRANDstack Starter](http://img.youtube.com/vi/rPC71lUhK_I/0.jpg)](http://www.youtube.com/watch?v=1JLs166lPcA 'Hands On With The GRANDstack Starter')
 
@@ -17,13 +18,31 @@ _Hands On With The GRANDstack Starter Video_
 
 The easiest way to get started with the GRANDstack Starter is to create a Neo4j Sandbox instance and use the `create-grandstack-app` command line tool.
 
-### 1. Create A Neo4j Sandbox Instance
+(If you have a running Neo4j database on localhost via Neo4j Desktop or a Neo4j server installation, change the password in `api/.env`)
+
+### 1. Create A Neo4j Instance
+
+#### Option :one: - Sandbox
 
 [Neo4j Sandbox](https://neo4j.com/sandbox) allows you to create a free hosted Neo4j instance private to you that can be used for development.
 
 After singing in to Neo4j Sandbox, click the `+ New Project` button and select the "Blank Sandbox" option. In the next step we'll use the connection credentials from the "Connection details" tab to connect our GraphQL API to this Neo4j instance.
 
 ![Neo4j Sandbox connection details](img/neo4j-sandbox.png)
+
+#### Option :two: - Desktop
+
+If you instead would like to use [Neo4j Desktop](https://neo4j.com/download/). The process will be almost the same with a minor detour. Install Neo4j Desktop for your chosen OS and then make a new blank graph for your project. It will require you to put in a password and username. Remember those.
+
+Next you need to go to open the manage screen from the options in the 3 dot stack menu
+
+![New desktop graph, manage tab](img/desktop-new-graph.png)
+
+And install the apoc plugin, green button at the top of the list.
+
+![Plugins](img/apoc-install.png)
+
+After that you can return to setting up your app with the credentails from the prior steps.
 
 ### 2. Run the `create-grandstack-app` CLI
 
@@ -43,7 +62,7 @@ This will create a new directory `myNewApp`, download the latest release of the 
 
 ### 3. Seed the database (optional)
 
-Once the application is running, in another terminal run
+Make sure your application is running locally with `npm start` or `yarn start`, open another terminal and run
 
 ```
 npm run seedDb
@@ -59,9 +78,9 @@ yarn run seedDb
 
 ![Grandstack app running in browser](img/grandstack-app.png)
 
-## Overview
+## <a name="overview"></a> Overview
 
-The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular.
+The GRANDstack Starter is a monorepo that includes a GraphQL API application and client web applications for React (default) and Angular for a business reviews dashboard.
 
 ### `/` - Project Root
 
@@ -128,6 +147,10 @@ cd ./web-angular && npm start
 
 See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
 
+### [`/web-react-ts`](./web-react-ts)
+
+:wrench::wrench::wrench::wrench: Currently Inbound :wrench::wrench::wrench::wrench:
+
 ## Deployment
 
 ### Netlify
@@ -142,19 +165,20 @@ NEO4J_PASSWORD
 
 See the "Hands On With The GRANDStack Starter" video linked at the beginning of this README for a walkthrough of deploying to Netlify.
 
-### Vercel / Zeit Now
+### Vercel
 
-Zeit Now v2 can be used with monorepos such as grand-stack-starter. [`now.json`](https://github.com/grand-stack/grand-stack-starter/blob/master/now.json) defines the configuration for deploying with Zeit Now v2.
+Vercel can be used with monorepos such as grand-stack-starter. [`vercel.json`](https://github.com/grand-stack/grand-stack-starter/blob/master/vercel.json) defines the configuration for deploying with Vercel.
 
-1. Set the now secrets for your Neo4j instance:
+1. get [vercel cli](https://vercel.com/download)
+2. Set the vercel secrets for your Neo4j instance:
 
 ```
-now secret add grand_stack_starter_neo4j_uri bolt://<YOUR_NEO4J_INSTANCE_HERE>
-now secret add grand_stack_starter_neo4j_user <YOUR_DATABASE_USERNAME_HERE>
-now secret add grand_stack_starter_neo4j_password <YOUR_DATABASE_USER_PASSWORD_HERE>
+vercel secret add grand_stack_starter_neo4j_uri bolt://<YOUR_NEO4J_INSTANCE_HERE>
+vercel secret add grand_stack_starter_neo4j_user <YOUR_DATABASE_USERNAME_HERE>
+vercel secret add grand_stack_starter_neo4j_password <YOUR_DATABASE_USER_PASSWORD_HERE>
 ```
 
-2. Run `now`
+3. Run `vercel`
 
 ## Docker Compose
 
@@ -169,7 +193,6 @@ If you want to load the example DB after the services have been started:
 ```
 docker-compose run api npm run seedDb
 ```
-
 
 You can find instructions for other ways to use Neo4j (Neo4j Desktop, Neo4j Aura, and other cloud services) in the [Neo4j directory README.](./neo4j)
 
