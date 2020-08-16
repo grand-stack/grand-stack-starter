@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const parse = require('csv-parse/lib/sync')
-const gql = require('graphql-tag')
+const { gql } = require('@apollo/client')
 
 export const getSeedMutations = async () => {
   const res = await fetch(
