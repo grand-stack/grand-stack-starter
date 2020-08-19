@@ -42,7 +42,7 @@ And install the apoc plugin, green button at the top of the list.
 
 ![Plugins](img/apoc-install.png)
 
-After that you can return to setting up your app with the credentails from the prior steps.
+After that you can return to setting up your app with the credentials from the prior steps.
 
 ### 2. Run the `create-grandstack-app` CLI
 
@@ -149,7 +149,13 @@ See [the project releases](https://github.com/grand-stack/grand-stack-starter/re
 
 ### [`/web-react-ts`](./web-react-ts)
 
-:wrench::wrench::wrench::wrench: Currently Inbound :wrench::wrench::wrench::wrench:
+A UI built with [CRA](https://reactjs.org/docs/create-a-new-react-app.html)
+
+_Start the React dev server_
+
+```
+cd ./web-react-ts && npm start
+```
 
 ## Deployment
 

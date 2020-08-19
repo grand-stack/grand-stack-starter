@@ -1,6 +1,5 @@
 # GRANDstack Starter - GraphQL API
 
-
 ## Quick Start
 
 Install dependencies:
@@ -23,7 +22,7 @@ This will start the GraphQL service (by default on localhost:4000) where you can
 
 Set your Neo4j connection string and credentials in `.env`. For example:
 
-*.env*
+_.env_
 
 ```
 NEO4J_URI=bolt://localhost:7687
@@ -35,15 +34,15 @@ Note that grand-stack-starter does not currently bundle a distribution of Neo4j.
 
 ## Deployment
 
-You can deploy to any service that hosts Node.js apps, but [Zeit Now](https://zeit.co/now) is a great easy to use service for hosting your app that has an easy to use free plan for small projects. 
+You can deploy to any service that hosts Node.js apps, but [Vercel](https://vercel.com/home) is a great easy to use service for hosting your app that has an easy to use free plan for small projects.
 
-To deploy your GraphQL service on Zeit Now, first install [Now Desktop](https://zeit.co/download) - you'll need to provide an email address. Then run
+To deploy your GraphQL service on Zeit Now, first install [Vercel](https://vercel.com/download) - you'll need to provide an email address. Then run
 
 ```
-now
+vercel
 ```
 
-to deploy your GraphQL service on Zeit Now. Once deployed you'll be given a fresh URL that represents the current state of your application where you can access your GraphQL endpoint and GraphQL Playgound. For example: https://grand-stack-starter-api-pqdeodpvok.now.sh/
+to deploy your GraphQL service on Vercel. Once deployed you'll be given a fresh URL that represents the current state of your application where you can access your GraphQL endpoint and GraphQL Playgound. For example: https://grand-stack-starter-api-pqdeodpvok.vercel.sh/
 
 ## Seeding The Database
 
