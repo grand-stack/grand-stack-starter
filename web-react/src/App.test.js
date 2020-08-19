@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URI,
+  cache: new InMemoryCache(),
 })
 
 it('renders without crashing', () => {

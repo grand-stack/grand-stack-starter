@@ -1,8 +1,6 @@
-import ApolloClient from 'apollo-client'
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
 import { getSeedMutations } from './seed-mutations'
 
 dotenv.config()
