@@ -145,16 +145,15 @@ _Start the Angular UI server_
 cd ./web-angular && npm start
 ```
 
-### [`/client_flutter`](./client_flutter)
+### [`/mobile_client_flutter`](./mobile_client_flutter)
 
 ![](img/grandstack-flutter.png)
 
-A mobile client built with [Flutter](https://flutter.dev) which supports Android, iOS, and web. See the [README](./client_flutter/README.md) for detailed setup instructions.
+A mobile client built with [Flutter](https://flutter.dev) which supports Android, iOS, and web. See the [README](./mobile_client_flutter/README.md) for detailed setup instructions.
 
 ```
-cd ./client_flutter && flutter run
+cd ./mobile_client_flutter && flutter run
 ```
-
 
 ### [`/web-react-ts`](./web-react-ts)
 
