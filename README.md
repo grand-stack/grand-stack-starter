@@ -145,7 +145,16 @@ _Start the Angular UI server_
 cd ./web-angular && npm start
 ```
 
-See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
+### [`/client_flutter`](./client_flutter)
+
+![](img/grandstack-flutter.png)
+
+A mobile client built with [Flutter](https://flutter.dev) which supports Android, iOS, and web. See the [README](./client_flutter/README.md) for detailed setup instructions.
+
+```
+cd ./client_flutter && flutter run
+```
+
 
 ### [`/web-react-ts`](./web-react-ts)
 
@@ -199,6 +208,8 @@ If you want to load the example DB after the services have been started:
 ```
 docker-compose run api npm run seedDb
 ```
+
+See [the project releases](https://github.com/grand-stack/grand-stack-starter/releases) for the changelog.
 
 You can find instructions for other ways to use Neo4j (Neo4j Desktop, Neo4j Aura, and other cloud services) in the [Neo4j directory README.](./neo4j)
 
