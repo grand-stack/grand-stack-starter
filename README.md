@@ -2,7 +2,7 @@
 
 # GRANDstack Starter
 
-```
+``` 
 npx create-grandstack-app myNewApp
 ```
 
@@ -18,7 +18,7 @@ _Hands On With The GRANDstack Starter Video_
 
 The easiest way to get started with the GRANDstack Starter is to create a Neo4j Sandbox instance and use the `create-grandstack-app` command line tool.
 
-(If you have a running Neo4j database on localhost via Neo4j Desktop or a Neo4j server installation, change the password in `api/.env`)
+(If you have a running Neo4j database on localhost via Neo4j Desktop or a Neo4j server installation, change the password in `api/.env` )
 
 ### 1. Create A Neo4j Instance
 
@@ -46,31 +46,31 @@ After that you can return to setting up your app with the credentials from the p
 
 ### 2. Run the `create-grandstack-app` CLI
 
-```
+``` 
 npx create-grandstack-app myNewApp
 ```
 
 or with Yarn
 
-```
+``` 
 yarn create grandstack-app myNewApp
 ```
 
 ![create grandstack app output](img/create-grandstack-app.png)
 
-This will create a new directory `myNewApp`, download the latest release of the GRANDstack Starter, install dependencies and prompt for your connection credentials for Neo4j to connect to the GraphQL API.
+This will create a new directory `myNewApp` , download the latest release of the GRANDstack Starter, install dependencies and prompt for your connection credentials for Neo4j to connect to the GraphQL API.
 
 ### 3. Seed the database (optional)
 
-Make sure your application is running locally with `npm start` or `yarn start`, open another terminal and run
+Make sure your application is running locally with `npm start` or `yarn start` , open another terminal and run
 
-```
+``` 
 npm run seedDb
 ```
 
 or with Yarn
 
-```
+``` 
 yarn run seedDb
 ```
 
@@ -86,20 +86,20 @@ The GRANDstack Starter is a monorepo that includes a GraphQL API application and
 
 The root directory contains some global configuration and scripts:
 
-- `npm run start` and `npm run build`
-- ESLint (.eslintrc.json) for code linting
-- Prettier (.prettierrc.json) for code formatting
-- Git hooks for applying formatting on commit
+* `npm run start` and `npm run build`
+* ESLint (.eslintrc.json) for code linting
+* Prettier (.prettierrc.json) for code formatting
+* Git hooks for applying formatting on commit
 
-### [`/api`](./api)
+### [ `/api` ](./api)
 
 ![](img/graphql-playground.png)
 
 This directory contains the GraphQL API application using Apollo Server and neo4j-graphql.js.
 
-- Change environment variable settings in `.env`:
+* Change environment variable settings in `.env` :
 
-```
+``` 
 # Use this file to set environment variables with credentials and configuration options
 # This file is provided as an example and should be replaced with your own values
 # You probably don't want to check this into version control!
@@ -120,7 +120,7 @@ GRAPHQL_SERVER_PATH=/graphql
 
 ```
 
-### [`/web-react`](./web-react)
+### [ `/web-react` ](./web-react)
 
 ![](img/grandstack-app.png)
 
@@ -128,12 +128,12 @@ The frontend React web application is found in this directory.
 
 It includes:
 
-- Material UI
-- React router
-- Apollo Client / React Hooks
-- Create React App
+* Material UI
+* React router
+* Apollo Client / React Hooks
+* Create React App
 
-### [`/web-angular`](./web-angular)
+### [ `/web-angular` ](./web-angular)
 
 ![](web-angular/img/angular-ui.jpg)
 
@@ -141,28 +141,38 @@ A UI built with [Angular](https://angular.io), [Apollo](https://www.apollographq
 
 _Start the Angular UI server_
 
-```
+``` 
 cd ./web-angular && npm start
 ```
 
-### [`/mobile_client_flutter`](./mobile_client_flutter)
+### [ `/mobile_client_flutter` ](./mobile_client_flutter)
 
 ![](img/grandstack-flutter.png)
 
 A mobile client built with [Flutter](https://flutter.dev) which supports Android, iOS, and web. See the [README](./mobile_client_flutter/README.md) for detailed setup instructions.
 
-```
+``` 
 cd ./mobile_client_flutter && flutter run
 ```
 
-### [`/web-react-ts`](./web-react-ts)
+### [ `/web-react-ts` ](./web-react-ts)
 
 A UI built with [CRA](https://reactjs.org/docs/create-a-new-react-app.html)
 
 _Start the React dev server_
 
-```
+``` 
 cd ./web-react-ts && npm start
+```
+
+### [ `/web-vue` ](./web-vue)
+
+A UI built with [Vue.js](https://vuejs.org/), [vue-apollo](https://apollo.vuejs.org/) and [vue-material](https://vuematerial.io/).
+
+_Start the Vue dev server_
+
+``` 
+cd web-vue && npm run serve
 ```
 
 ## Deployment
@@ -171,7 +181,7 @@ cd ./web-react-ts && npm start
 
 This monorepo can be deployed to Netlify. The frontend application will be served over Netlify's CDN and the GraphQL API will be provisioned as a serverless GraphQL API lambda function deployed to AWS (via Netlify). A netlify.toml file is included with the necessary build configurations. The following environment variables must be set in Netlify (either via the Netlify web UI or via the command line tool)
 
-```
+``` 
 NEO4J_URI
 NEO4J_USER
 NEO4J_PASSWORD
@@ -181,12 +191,12 @@ See the "Hands On With The GRANDStack Starter" video linked at the beginning of 
 
 ### Vercel
 
-Vercel can be used with monorepos such as grand-stack-starter. [`vercel.json`](https://github.com/grand-stack/grand-stack-starter/blob/master/vercel.json) defines the configuration for deploying with Vercel.
+Vercel can be used with monorepos such as grand-stack-starter. [ `vercel.json` ](https://github.com/grand-stack/grand-stack-starter/blob/master/vercel.json) defines the configuration for deploying with Vercel.
 
 1. get [vercel cli](https://vercel.com/download)
 2. Set the vercel secrets for your Neo4j instance:
 
-```
+``` 
 vercel secret add grand_stack_starter_neo4j_uri bolt://<YOUR_NEO4J_INSTANCE_HERE>
 vercel secret add grand_stack_starter_neo4j_user <YOUR_DATABASE_USERNAME_HERE>
 vercel secret add grand_stack_starter_neo4j_password <YOUR_DATABASE_USER_PASSWORD_HERE>
@@ -198,13 +208,13 @@ vercel secret add grand_stack_starter_neo4j_password <YOUR_DATABASE_USER_PASSWOR
 
 You can quickly start via:
 
-```
+``` 
 docker-compose up -d
 ```
 
 If you want to load the example DB after the services have been started:
 
-```
+``` 
 docker-compose run api npm run seedDb
 ```
 
