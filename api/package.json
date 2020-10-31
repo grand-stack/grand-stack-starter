@@ -14,13 +14,13 @@
   "author": "William Lyon",
   "license": "MIT",
   "dependencies": {
-    "@apollo/client": "^3.1.3",
-    "apollo-server": "^2.14.2",
-    "apollo-server-lambda": "^2.14.2",
+    "@apollo/client": "^3.2.5",
+    "apollo-server": "^2.19.0",
+    "apollo-server-lambda": "^2.19.0",
     "csv-parse": "^4.10.1",
     "dotenv": "^7.0.0",
-    "neo4j-driver": "^4.0.2",
-    "neo4j-graphql-js": "^2.14.2",
+    "neo4j-driver": "^4.1.2",
+    "neo4j-graphql-js": "^2.17.0",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1"
   },
