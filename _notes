@@ -1,0 +1,79 @@
+https://www.youtube.com/watch?v=1JLs166lPcA
+steps: 
+
+npx create-grandstack-app grandstack-app 
+
+prompt: 
+Enter connection string for Neo4j(bolt://localhost:7687)
+
+CREATE neo4j in SANDBOX: 
+neo4j.com/sandbox 
+    - select Blank Database
+    - see and get connection credentials 
+    - open the db in browser 
+    -run MATCH (n) RETURN  COUNT(n) 
+    ... should be 0 
+
+copy and paste in bolt URI 
+encrypt option ( NO )
+copy and paste username and password 
+
+all gets saved to ... 
+grandstack-app/api/.env 
+
+
+cd grandstack-app 
+npm run start 
+(... starts GraphQL and React) 
+
+
+SEED DATABASE: 
+cd grandstack-app/api 
+npm run seedDb 
+
+...once finished, check in neo4j browser again with previous CQL command. 
+
+RUN THIS COMMAND in the neo4j prompt
+$ call db.schema.visualization
+
+OPEN IT UP IN VSCODE: 
+looks at 'api' index and schema.graphql 
+makeAugmentedSchema 
+driver 
+Apollo Server 
+
+GO TO graphQL playground @ ... 
+localhost:4001/graphql/ 
+see Docs 
+    - Queries 
+    - Mutations
+
+
+RUN the example query.... 
+    same query used for the 'Recent Reviews' table. 
+
+
+DEPLOY TO NETLIFY: 
+static and serverless functions 
+create git repo ... 
+change remote appropriately 
+
+create new site 
+connect to github 
+select the repo 
+
+NEED TO ADD 3 .env varaibles : 
+NEO4J_URI = $1
+NEO4J_USER = $2
+NEO4J_PASSWORD  = $3 
+
+values come from sandbox project dashboard. 
+
+Then Depoly. 
+
+The SERVERLESS function is 
+/api/src/functions/graphql/graphql.js 
+
+Look at web-react directory: 
+/src/components/ 
+...useQuery 
