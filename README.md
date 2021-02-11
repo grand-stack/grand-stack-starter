@@ -26,7 +26,7 @@ The easiest way to get started with the GRANDstack Starter is to create a Neo4j 
 
 [Neo4j Sandbox](https://neo4j.com/sandbox) allows you to create a free hosted Neo4j instance private to you that can be used for development.
 
-After singing in to Neo4j Sandbox, click the `+ New Project` button and select the "Blank Sandbox" option. In the next step we'll use the connection credentials from the "Connection details" tab to connect our GraphQL API to this Neo4j instance.
+After signing in to Neo4j Sandbox, click the `+ New Project` button and select the "Blank Sandbox" option. In the next step we'll use the connection credentials from the "Connection details" tab to connect our GraphQL API to this Neo4j instance.
 
 ![Neo4j Sandbox connection details](img/neo4j-sandbox.png)
 
