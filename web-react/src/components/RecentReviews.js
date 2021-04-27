@@ -6,19 +6,18 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { useQuery, gql } from '@apollo/client'
 import Title from './Title'
+import moment from 'moment'
 
 const GET_RECENT_REVIEWS_QUERY = gql`
   {
-    Review(first: 10, orderBy: date_desc) {
+    reviews(options: { limit: 10, sort: { date: DESC } }) {
       user {
         name
       }
       business {
         name
       }
-      date {
-        formatted
-      }
+      date
       text
       stars
     }
@@ -44,9 +43,9 @@ export default function RecentReviews() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.Review.map((row) => (
+          {data.reviews.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date.formatted}</TableCell>
+              <TableCell>{moment(row.date).format('MMMM Do YYYY')}</TableCell>
               <TableCell>{row.business.name}</TableCell>
               <TableCell>{row.user.name}</TableCell>
               <TableCell>{row.text}</TableCell>

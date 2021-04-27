@@ -36,10 +36,13 @@ const GET_USER = gql`
   query usersPaginateQuery(
     $first: Int
     $offset: Int
-    $orderBy: [_UserOrdering]
-    $filter: _UserFilter
+    $orderBy: [UserSort]
+    $filter: UserWhere
   ) {
-    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
+    users(
+      options: { limit: $first, skip: $offset, sort: $orderBy }
+      where: $filter
+    ) {
       id: userId
       name
       avgStars
@@ -50,7 +53,7 @@ const GET_USER = gql`
 
 function UserList(props) {
   const { classes } = props
-  const [order, setOrder] = React.useState('asc')
+  const [order, setOrder] = React.useState('ASC')
   const [orderBy, setOrderBy] = React.useState('name')
   const [page] = React.useState(0)
   const [rowsPerPage] = React.useState(10)
@@ -58,7 +61,7 @@ function UserList(props) {
 
   const getFilter = () => {
     return filterState.usernameFilter.length > 0
-      ? { name_contains: filterState.usernameFilter }
+      ? { name_CONTAINS: filterState.usernameFilter }
       : {}
   }
 
@@ -66,17 +69,17 @@ function UserList(props) {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
-      orderBy: orderBy + '_' + order,
+      orderBy: { [orderBy]: order },
       filter: getFilter(),
     },
   })
 
   const handleSortRequest = (property) => {
     const newOrderBy = property
-    let newOrder = 'desc'
+    let newOrder = 'DESC'
 
-    if (orderBy === property && order === 'desc') {
-      newOrder = 'asc'
+    if (orderBy === property && order === 'DESC') {
+      newOrder = 'ASC'
     }
 
     setOrder(newOrder)
@@ -116,50 +119,24 @@ function UserList(props) {
             <TableRow>
               <TableCell
                 key="name"
-                sortDirection={orderBy === 'name' ? order : false}
+                sortDirection={orderBy === 'name' ? order.toLowerCase() : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
                     active={orderBy === 'name'}
-                    direction={order}
+                    direction={order.toLowerCase()}
                     onClick={() => handleSortRequest('name')}
                   >
                     Name
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-              <TableCell
-                key="avgStars"
-                sortDirection={orderBy === 'avgStars' ? order : false}
-              >
-                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'avgStars'}
-                    direction={order}
-                    onClick={() => handleSortRequest('avgStars')}
-                  >
-                    Average Stars
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-              <TableCell
-                key="numReviews"
-                sortDirection={orderBy === 'numReviews' ? order : false}
-              >
-                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'numReviews'}
-                    direction={order}
-                    onClick={() => handleSortRequest('numReviews')}
-                  >
-                    Number of Reviews
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
+              <TableCell key="avgStars">Average Stars</TableCell>
+              <TableCell key="numReviews">Number of Reviews</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.User.map((n) => {
+            {data.users.map((n) => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">

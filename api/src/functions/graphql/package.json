@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "apollo-server-lambda": "^2.14.2",
-    "neo4j-graphql-js": "^2.14.2",
+    "@neo4j/graphql": "^1.0.0-beta.2",
+    "graphql": "^15.5.0",
     "neo4j-driver": "^4.0.2"
   }
 }

@@ -12,35 +12,39 @@ import {
   TableSortLabel,
   TextField,
 } from '@material-ui/core'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client'
 
 import Title from './Title'
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    maxWidth: 700,
-    marginTop: theme.spacing(3),
-    overflowX: 'auto',
-    margin: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    minWidth: 300,
-  },
-})
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      maxWidth: 700,
+      marginTop: theme.spacing(3),
+      overflowX: 'auto',
+      margin: 'auto',
+    },
+    table: {
+      minWidth: 700,
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      minWidth: 300,
+    },
+  })
 
 const GET_USER = gql`
   query usersPaginateQuery(
     $first: Int
     $offset: Int
-    $orderBy: [_UserOrdering]
-    $filter: _UserFilter
+    $orderBy: [UserSort]
+    $filter: UserWhere
   ) {
-    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
+    users(
+      options: { limit: $first, skip: $offset, sort: $orderBy }
+      where: $filter
+    ) {
       id: userId
       name
       avgStars
@@ -59,7 +63,7 @@ function UserList(props: any) {
 
   const getFilter = () => {
     return filterState.usernameFilter.length > 0
-      ? { name_contains: filterState.usernameFilter }
+      ? { name_CONTAINS: filterState.usernameFilter }
       : {}
   }
 
@@ -67,7 +71,7 @@ function UserList(props: any) {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
-      orderBy: orderBy + '_' + order,
+      orderBy: { [orderBy]: order.toUpperCase() },
       filter: getFilter(),
     },
   })
@@ -133,34 +137,18 @@ function UserList(props: any) {
                 key="avgStars"
                 sortDirection={orderBy === 'avgStars' ? order : false}
               >
-                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'avgStars'}
-                    direction={order}
-                    onClick={() => handleSortRequest('avgStars')}
-                  >
-                    Average Stars
-                  </TableSortLabel>
-                </Tooltip>
+                Average Stars
               </TableCell>
               <TableCell
                 key="numReviews"
                 sortDirection={orderBy === 'numReviews' ? order : false}
               >
-                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'numReviews'}
-                    direction={order}
-                    onClick={() => handleSortRequest('numReviews')}
-                  >
-                    Number of Reviews
-                  </TableSortLabel>
-                </Tooltip>
+                Number of Reviews
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.User.map((n: any) => {
+            {data.users.map((n: any) => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">

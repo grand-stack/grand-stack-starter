@@ -95,7 +95,7 @@ The root directory contains some global configuration and scripts:
 
 ![](img/graphql-playground.png)
 
-This directory contains the GraphQL API application using Apollo Server and neo4j-graphql.js.
+This directory contains the GraphQL API application using Apollo Server and the Neo4j GraphQL Library.
 
 - Change environment variable settings in `.env`:
 

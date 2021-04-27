@@ -2,7 +2,7 @@
 // as a lambda function
 
 const { ApolloServer } = require('apollo-server-lambda')
-const { makeAugmentedSchema } = require('neo4j-graphql-js')
+import { Neo4jGraphQL } from '@neo4j/graphql'
 const neo4j = require('neo4j-driver')
 
 // This module is copied during the build step
@@ -14,14 +14,13 @@ const driver = neo4j.driver(
   neo4j.auth.basic(
     process.env.NEO4J_USER || 'neo4j',
     process.env.NEO4J_PASSWORD || 'neo4j'
-  ),
-  {
-    encrypted: process.env.NEO4J_ENCRYPTED ? 'ENCRYPTION_ON' : 'ENCRYPTION_OFF',
-  }
+  )
 )
 
+const neoSchema = new Neo4jGraphQL({ typeDefs, driver })
+
 const server = new ApolloServer({
-  schema: makeAugmentedSchema({ typeDefs }),
+  schema: neoSchema.schema,
   context: { driver, neo4jDatabase: process.env.NEO4J_DATABASE },
 })
 

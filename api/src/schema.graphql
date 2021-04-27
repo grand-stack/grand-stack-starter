@@ -1,7 +1,11 @@
+scalar Point
+scalar DateTime
+scalar PointInput
+
 type User {
   userId: ID!
   name: String
-  reviews: [Review] @relation(name: "WROTE", direction: OUT)
+  reviews: [Review] @relationship(type: "WROTE", direction: OUT)
   avgStars: Float
     @cypher(
       statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))"
@@ -25,25 +29,25 @@ type Business {
     @cypher(
       statement: "MATCH (this)<-[:REVIEWS]-(r:Review) RETURN coalesce(avg(r.stars),0.0)"
     )
-  reviews: [Review] @relation(name: "REVIEWS", direction: IN)
-  categories: [Category] @relation(name: "IN_CATEGORY", direction: OUT)
+  reviews: [Review] @relationship(type: "REVIEWS", direction: IN)
+  categories: [Category] @relationship(type: "IN_CATEGORY", direction: OUT)
 }
 
 type Review {
   reviewId: ID!
   stars: Float
   text: String
-  date: Date
-  business: Business @relation(name: "REVIEWS", direction: OUT)
-  user: User @relation(name: "WROTE", direction: IN)
+  date: DateTime
+  business: Business @relationship(type: "REVIEWS", direction: OUT)
+  user: User @relationship(type: "WROTE", direction: IN)
 }
 
 type Category {
   name: ID!
-  businesses: [Business] @relation(name: "IN_CATEGORY", direction: IN)
+  businesses: [Business] @relationship(type: "IN_CATEGORY", direction: IN)
 }
 
-type RatingCount {
+type RatingCount @exclude {
   stars: Float!
   count: Int!
 }
@@ -52,6 +56,33 @@ type Mutation {
   mergeBusinessCategory(categories: [String!]!, businessId: ID!): Business
     @cypher(
       statement: "MATCH (b:Business {businessId: $businessId}) UNWIND $categories AS cat MERGE (c:Category {name: cat}) MERGE (b)-[:IN_CATEGORY]->(c) RETURN b"
+    )
+  mergeUser(name: String!, userId: ID!): User
+    @cypher(
+      statement: """
+      MERGE (u:User {userId: $userId})
+      ON CREATE SET u.name = $name
+      """
+    )
+  mergeBusiness(
+    businessId: ID!
+    name: String!
+    address: String!
+    city: String!
+    state: String!
+    latitude: Float!
+    longitude: Float!
+  ): Business
+    @cypher(
+      statement: """
+      MERGE (b:Business {businessId: $businessId})
+      ON CREATE SET b.name = $name,
+                    b.address = $address,
+                    b.city = $city,
+                    b.state = $state,
+                    b.location = Point({latitude: $latitude, longitude: $longitude})
+      RETURN b
+      """
     )
 }
 

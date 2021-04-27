@@ -32,64 +32,56 @@ const generateMutations = (records) => {
       mutation: gql`
         mutation mergeReviews(
           $userId: ID!
-          $userName: String
+          $userName: String!
           $businessId: ID!
-          $businessName: String
-          $businessCity: String
-          $businessState: String
-          $businessAddress: String
-          $latitude: Float
-          $longitude: Float
+          $businessName: String!
+          $businessCity: String!
+          $businessState: String!
+          $businessAddress: String!
+          $latitude: Float!
+          $longitude: Float!
           $reviewId: ID!
           $reviewText: String
-          $year: Int
-          $month: Int
-          $day: Int
+          $reviewDate: Date
           $reviewStars: Float
           $categories: [String!]!
         ) {
-          user: MergeUser(userId: $userId, name: $userName) {
+          user: mergeUser(userId: $userId, name: $userName) {
             userId
           }
-          business: MergeBusiness(
+          business: mergeBusiness(
             businessId: $businessId
             name: $businessName
             address: $businessAddress
             city: $businessCity
             state: $businessState
-            location: { latitude: $latitude, longitude: $longitude }
+            latitude: $latitude
+            longitude: $longitude
           ) {
             businessId
           }
-          review: MergeReview(
-            reviewId: $reviewId
-            text: $reviewText
-            date: { year: $year, month: $month, day: $day }
-            stars: $reviewStars
-          ) {
-            reviewId
-          }
-          reviewUser: MergeReviewUser(
-            from: { userId: $userId }
-            to: { reviewId: $reviewId }
-          ) {
-            from {
-              userId
-            }
-          }
-          reviewBusiness: MergeReviewBusiness(
-            from: { reviewId: $reviewId }
-            to: { businessId: $businessId }
-          ) {
-            from {
-              reviewId
-            }
-          }
+
           businessCategories: mergeBusinessCategory(
             categories: $categories
             businessId: $businessId
           ) {
             businessId
+          }
+
+          reviews: createReviews(
+            input: {
+              reviewId: $reviewId
+              stars: $reviewStars
+              text: $reviewText
+              date: $reviewDate
+              business: { connect: { where: { businessId: $businessId } } }
+              user: { connect: { where: { userId: $userId } } }
+            }
+          ) {
+            reviews {
+              reviewId
+              date
+            }
           }
         }
       `,
