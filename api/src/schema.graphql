@@ -62,6 +62,7 @@ type Mutation {
       statement: """
       MERGE (u:User {userId: $userId})
       ON CREATE SET u.name = $name
+      RETURN u
       """
     )
   mergeBusiness(

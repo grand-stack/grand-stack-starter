@@ -15,12 +15,12 @@
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@neo4j/graphql": "^1.0.0",
     "apollo-server": "^2.19.2",
     "apollo-server-lambda": "^2.19.0",
     "csv-parse": "^4.10.1",
     "dotenv": "^7.0.0",
     "neo4j-driver": "^4.2.2",
-    "@neo4j/graphql": "^1.0.0-beta.2",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1"
   },
