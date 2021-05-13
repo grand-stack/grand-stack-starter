@@ -42,7 +42,7 @@ const generateMutations = (records) => {
           $longitude: Float!
           $reviewId: ID!
           $reviewText: String
-          $reviewDate: Date
+          $reviewDate: DateTime
           $reviewStars: Float
           $categories: [String!]!
         ) {
