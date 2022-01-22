@@ -15,12 +15,12 @@
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.2.5",
-    "@neo4j/graphql": "^1.0.0",
-    "apollo-server": "^2.19.2",
-    "apollo-server-lambda": "^2.19.0",
-    "csv-parse": "^4.10.1",
-    "dotenv": "^7.0.0",
-    "neo4j-driver": "^4.2.2",
+    "@neo4j/graphql": "^2.5.4",
+    "apollo-server": "^3.5.0",
+    "apollo-server-lambda": "^3.5.0",
+    "csv-parse": "^5.0.3",
+    "dotenv": "^10.0.0",
+    "neo4j-driver": "^4.3.1",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1"
   },
@@ -37,7 +37,7 @@
     "babel-plugin-auto-import": "^1.0.5",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^7.0.2",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.15",
     "shx": "^0.3.2"
   }
 }
