@@ -24,4 +24,15 @@ const server = new ApolloServer({
   context: { driver, neo4jDatabase: process.env.NEO4J_DATABASE },
 })
 
-exports.handler = server.createHandler()
+const apolloHandler = server.createHandler()
+
+export const handler = (event, context, ...args) => {
+  return apolloHandler(
+    {
+      ...event,
+      requestContext: context,
+    },
+    context,
+    ...args
+  )
+}
